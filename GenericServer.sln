@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28705.295
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericServer", "GenericServer\GenericServer.csproj", "{B08BEE5D-08AD-4830-AFB8-533286C1C043}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseCore", "DatabaseCore\DatabaseCore.csproj", "{7C317596-BC7E-4873-80B4-E7AF45AAED3E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B08BEE5D-08AD-4830-AFB8-533286C1C043}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B08BEE5D-08AD-4830-AFB8-533286C1C043}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B08BEE5D-08AD-4830-AFB8-533286C1C043}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B08BEE5D-08AD-4830-AFB8-533286C1C043}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C317596-BC7E-4873-80B4-E7AF45AAED3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C317596-BC7E-4873-80B4-E7AF45AAED3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C317596-BC7E-4873-80B4-E7AF45AAED3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C317596-BC7E-4873-80B4-E7AF45AAED3E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {06E63BE1-CF78-4C3B-8ABC-8F0C0C583988}
+	EndGlobalSection
+EndGlobal
