@@ -6,14 +6,18 @@ using System.Text;
 
 namespace DatabaseCore.Models
 {
-    public class User
+    public class Message
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public ulong UserId { get; set; }
-        [MaxLength(32)]
-        public string UserName { get; set; }
+        public ulong MessageId { get; set; }
 
-        public List<Message> Messages { get; set; }
+        [MaxLength(256)]
+        public string Text { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime InsertDate { get; set; }
+
+        public User User { get; set; }
     }
 }
