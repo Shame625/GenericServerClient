@@ -12,6 +12,7 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Private>true</Private>
     </ProjectReference>
+    <ProjectReference Include="..\ServerInfrastructure\ServerInfrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

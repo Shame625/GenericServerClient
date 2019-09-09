@@ -20,7 +20,7 @@ namespace Infrastructure
         public static BasePacket Deserialize(this byte[] data)
         {
             var packetId = data.GetPacketId();
-            Type type = PacketStorage.packets[packetId].type;
+            Type type = PacketStorage.packets[packetId];
 
             int rawsize = Marshal.SizeOf(type);
             if (rawsize > data.Length) return null;

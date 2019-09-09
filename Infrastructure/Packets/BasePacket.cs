@@ -9,32 +9,18 @@ namespace Infrastructure.Packets
     public abstract class BasePacket
     {
         public OpCodes Id { get; set; }
+        public long Ticks { get; set; }
 
-        public byte[] Execute(ref Connection c)
+
+        public BasePacket(OpCodes opCode)
         {
-            try
-            {
-                return PacketStorage.packets[Id].operation(this, ref c);
-            }
-            catch
-            {
-                return null;
-            }
+            Id = opCode;
+            Ticks = DateTime.Now.Ticks;
         }
-    }
 
-    public static class PacketOperations
-    {
-        public static byte[] Execute(BasePacket bp, ref Connection c)
+        public DateTime GetTimestamp()
         {
-            try
-            {
-                return PacketStorage.packets[bp.Id].operation(bp, ref c);
-            }
-            catch
-            {
-                return null;
-            }
+            return new DateTime(Ticks);
         }
     }
 }

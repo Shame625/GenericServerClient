@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericServer", "GenericSer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseCore", "DatabaseCore\DatabaseCore.csproj", "{7C317596-BC7E-4873-80B4-E7AF45AAED3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericClient", "GenericClient\GenericClient.csproj", "{E836499A-9989-465C-A480-BA0CA414FBEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericClient", "GenericClient\GenericClient.csproj", "{E836499A-9989-465C-A480-BA0CA414FBEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{123047CA-9B46-4930-9CB2-FA0EE4D83D33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{123047CA-9B46-4930-9CB2-FA0EE4D83D33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerInfrastructure", "ServerInfrastructure\ServerInfrastructure.csproj", "{108365E9-3763-41B9-8776-8E5476CB5666}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{123047CA-9B46-4930-9CB2-FA0EE4D83D33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{123047CA-9B46-4930-9CB2-FA0EE4D83D33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{123047CA-9B46-4930-9CB2-FA0EE4D83D33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{108365E9-3763-41B9-8776-8E5476CB5666}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{108365E9-3763-41B9-8776-8E5476CB5666}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{108365E9-3763-41B9-8776-8E5476CB5666}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{108365E9-3763-41B9-8776-8E5476CB5666}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

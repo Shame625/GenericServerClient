@@ -1,5 +1,6 @@
 ﻿using Infrastructure;
 using Microsoft.Extensions.Configuration;
+using ServerInfrastructure;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,7 @@ namespace GenericServer
     public static class Server
     {
         public static IConfiguration config;
-        static Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        static readonly Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         static byte[] buffer;
         public static void StartServer()
         {
@@ -55,7 +56,7 @@ namespace GenericServer
             try
             {
                 client = ((Socket)AR.AsyncState).HandleSocket();
-                client.socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), client.socket);
+
                 int received = client.socket.EndReceive(AR);
 
                 if (received == 0)
@@ -79,23 +80,27 @@ namespace GenericServer
                     //Send data
                     if (data != null)
                     {
-                        data.SendPacket(ref client);
+                        //send to all users
+                        if (PacketHandler.packets[receivedPacket.Id].global)
+                        {
+                            foreach(var v in Connections.connectedClients)
+                            {
+                                var temp = v.Value;
+                                data.SendPacket(ref temp);
+                            }
+                        }
+                        //send to caller
+                        else
+                        {
+                            data.SendPacket(ref client);
+                        }
                     }
                 }
 
                 //Continue recieving data for client.
                 client.socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, ReceiveCallback, client.socket);
             }
-            catch (SocketException ex)
-            {
-                Console.WriteLine(ex.Message);
-                if (client != null)
-                {
-                    Connections.connectedClients.Remove(client.socket);
-                    ServerHelper.UpdateConsoleTitle(Connections.connectedClients.Count);
-                }
-            }
-            catch (ObjectDisposedException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 if (client != null)

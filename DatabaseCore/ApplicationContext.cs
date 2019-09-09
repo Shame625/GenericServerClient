@@ -5,22 +5,19 @@ using System;
 
 namespace DatabaseCore
 {
-    public class ApplicationContext
+    public class ApplicationContext : DbContext
     {
-        public class SchoolContext : DbContext
+        public DbSet<User> Users { get; set; }
+        public DbSet<Message> Messages { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            public DbSet<User> Users { get; set; }
-            public DbSet<Message> Messages { get; set; }
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-            protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            {
-                IConfigurationRoot configuration = new ConfigurationBuilder()
-                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                    .AddJsonFile("appsettings.json")
-                    .Build();
-
-                optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-            }
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         }
     }
 }

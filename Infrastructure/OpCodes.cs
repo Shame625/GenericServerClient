@@ -1,38 +1,36 @@
 ﻿using Infrastructure.Packets;
+using Infrastructure.Packets.Login;
+using Infrastructure.Packets.Message;
+using Infrastructure.Packets.Register;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Infrastructure
 {
     public enum OpCodes
     {
-        MSG_Handshake_1 = 0x0001,
-        MSG_Handshake_2 = 0x0002,
-        MSG_Handshake_Final = 0x0003,
-        CMSG_GetTime = 0x2000,
-        SMSG_GetTime = 0x2001,
-    }
+        CMSG_Login = 0x0000,
+        SMSG_Login = 0x0001,
 
-    public delegate byte[] GenericDelegate(BasePacket bp, ref Connection c);
+        CMSG_Register = 0x0020,
+        SMSG_Register = 0x0021,
+
+        CMSG_Message = 0x1000,
+        SMSG_Message = 0x1001
+    }
 
     public static class PacketStorage
     {
-        public static Dictionary<OpCodes, OpCodeFunction> packets = new Dictionary<OpCodes, OpCodeFunction>()
+        public static Dictionary<OpCodes, Type> packets = new Dictionary<OpCodes, Type>()
         {
+            {OpCodes.CMSG_Login, typeof(CMSG_Login)},
+            {OpCodes.SMSG_Login, typeof(SMSG_Login)},
 
+            {OpCodes.CMSG_Register, typeof(CMSG_Register)},
+            {OpCodes.SMSG_Register, typeof(SMSG_Register)},
+
+            {OpCodes.CMSG_Message, typeof(CMSG_Message)},
+            {OpCodes.SMSG_Message, typeof(SMSG_Message)}
         };
-    }
-
-    public class OpCodeFunction
-    {
-        public Type type;
-        public GenericDelegate operation;
-
-        public OpCodeFunction(Type type, GenericDelegate operation)
-        {
-            this.type = type;
-            this.operation = operation;
-        }
     }
 }

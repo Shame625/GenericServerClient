@@ -10,7 +10,7 @@ namespace DatabaseCore.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public ulong UserId { get; set; }
+        public long UserId { get; set; }
         [MaxLength(32)]
         public string UserName { get; set; }
 

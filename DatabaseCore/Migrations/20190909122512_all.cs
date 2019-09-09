@@ -1,19 +1,25 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DatabaseCore.Migrations
 {
-    public partial class Messages : Migration
+    public partial class all : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "Users",
-                maxLength: 32,
-                nullable: true,
-                oldClrType: typeof(string),
-                oldNullable: true);
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    UserId = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserName = table.Column<string>(maxLength: 32, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.UserId);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Messages",
@@ -22,7 +28,7 @@ namespace DatabaseCore.Migrations
                     MessageId = table.Column<decimal>(nullable: false),
                     Text = table.Column<string>(maxLength: 256, nullable: true),
                     InsertDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<decimal>(nullable: true)
+                    UserId = table.Column<long>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,13 +52,8 @@ namespace DatabaseCore.Migrations
             migrationBuilder.DropTable(
                 name: "Messages");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "UserName",
-                table: "Users",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldMaxLength: 32,
-                oldNullable: true);
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

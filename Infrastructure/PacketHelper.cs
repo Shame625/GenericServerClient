@@ -16,7 +16,7 @@ namespace Infrastructure
             {
                 var dataAsString = BitConverter.ToString(data).Replace("-", " ");
                 var prefix = isSent ? "[SENT] " : "[REC] ";
-                Console.WriteLine(prefix + DateTime.Now + "\nPacket: " + PacketStorage.packets[packettype].type + "\t\tPacketSize: " + data.Length + "\n" + dataAsString);
+                Console.WriteLine(prefix + DateTime.Now + "\nPacket: " + PacketStorage.packets[packettype] + "\t\tPacketSize: " + data.Length + "\n" + dataAsString);
             }
             catch
             {

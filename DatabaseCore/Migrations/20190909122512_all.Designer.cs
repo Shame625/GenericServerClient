@@ -9,9 +9,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DatabaseCore.Migrations
 {
-    [DbContext(typeof(ApplicationContext.SchoolContext))]
-    [Migration("20190908154509_Messages")]
-    partial class Messages
+    [DbContext(typeof(ApplicationContext))]
+    [Migration("20190909122512_all")]
+    partial class all
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,8 +33,7 @@ namespace DatabaseCore.Migrations
                     b.Property<string>("Text")
                         .HasMaxLength(256);
 
-                    b.Property<decimal?>("UserId")
-                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 20, scale: 0)));
+                    b.Property<long?>("UserId");
 
                     b.HasKey("MessageId");
 
@@ -45,9 +44,9 @@ namespace DatabaseCore.Migrations
 
             modelBuilder.Entity("DatabaseCore.Models.User", b =>
                 {
-                    b.Property<decimal>("UserId")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasConversion(new ValueConverter<decimal, decimal>(v => default(decimal), v => default(decimal), new ConverterMappingHints(precision: 20, scale: 0)));
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("UserName")
                         .HasMaxLength(32);

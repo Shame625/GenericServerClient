@@ -1,5 +1,9 @@
 ﻿using Infrastructure;
 using Infrastructure.Packets;
+using Infrastructure.Packets.Login;
+using Infrastructure.Packets.Message;
+using Infrastructure.Packets.Register;
+using ServerInfrastructure;
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -12,7 +16,7 @@ namespace Client
     class Program
     {
         private static Socket _clientSocket;
-        private static byte[] _buffer = new byte[1024];
+        private static readonly byte[] _buffer = new byte[1024];
         public static Connection c = new Connection(null);
 
         static void Main(string[] args)
@@ -21,11 +25,18 @@ namespace Client
 
             System.Threading.Thread.Sleep(2000);
 
-            while (true)
-            {
-                System.Threading.Thread.Sleep(1000);
+            var Login = new CMSG_Register() { UserName = "Test" };
+            Send(Login.Serialize());
 
+
+            while(true)
+            {
+                var b = Console.ReadLine();
+
+                Send(new CMSG_Message() { Message = b }.Serialize());
             }
+
+            Console.ReadKey();
         }
 
         static void Connect()
@@ -83,9 +94,15 @@ namespace Client
 
             try
             {
-                dataBuff.PrintData(false);
+                //dataBuff.PrintData(false);
 
                 packet = dataBuff.Deserialize();
+
+                if(packet.Id == OpCodes.SMSG_Message)
+                {
+                    var v = packet as SMSG_Message;
+                    Console.WriteLine(v.GetTimestamp().ToString("dd/MM/yyyy hh:mm:ss") + " | " + v.Message);
+                }
 
                 var test = packet.Execute(ref c);
                 if (test != null)
@@ -108,7 +125,7 @@ namespace Client
         private static void Send(byte[] data)
         {
 
-            data.PrintData(true);
+            //data.PrintData(true);
 
             _clientSocket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(SendCallback), _clientSocket);
         }
@@ -122,7 +139,7 @@ namespace Client
 
                 // Complete sending the data to the remote device.
                 int bytesSent = client.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to server.", bytesSent);
+                //Console.WriteLine("Sent {0} bytes to server.", bytesSent);
                 _clientSocket.BeginReceive(_buffer, 0, _buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), null);
             }
             catch (Exception e)
