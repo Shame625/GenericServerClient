@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ClientInfrastructure\ClientInfrastructure.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-    <ProjectReference Include="..\ServerInfrastructure\ServerInfrastructure.csproj" />
   </ItemGroup>
 
 </Project>

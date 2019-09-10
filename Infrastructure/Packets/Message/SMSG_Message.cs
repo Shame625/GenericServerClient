@@ -7,6 +7,9 @@ namespace Infrastructure.Packets.Message
     {
         public SMSG_Message() : base(OpCodes.SMSG_Message) { }
 
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+        public string UserName;
+
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
         public string Message;
     }

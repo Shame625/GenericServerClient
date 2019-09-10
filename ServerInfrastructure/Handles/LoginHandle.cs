@@ -15,10 +15,12 @@ namespace Infrastructure.Handles
 
             using (var context = new ApplicationContext())
             {
-                var exist = context.Users.Any(o => o.UserName == loginPacket.UserName);
-                if(exist)
+                var userObject = context.Users.FirstOrDefault(o => o.UserName == loginPacket.UserName);
+                if(userObject != null)
                 {
+                    response.UserName = loginPacket.UserName;
                     response.status = Enums.Enums.LoginStatus.Ok;
+                    c.User = userObject;
                 }
             }
 

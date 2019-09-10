@@ -1,9 +1,9 @@
-﻿using Infrastructure;
+﻿using ClientInfrastructure;
+using Infrastructure;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Login;
 using Infrastructure.Packets.Message;
 using Infrastructure.Packets.Register;
-using ServerInfrastructure;
 using System;
 using System.IO;
 using System.IO.Compression;
@@ -25,9 +25,31 @@ namespace Client
 
             System.Threading.Thread.Sleep(2000);
 
-            var Login = new CMSG_Register() { UserName = "Test" };
-            Send(Login.Serialize());
-
+            
+            while (ClientStates.loginStatus == -1)
+            {
+                Console.WriteLine("1. Register\n2. Login");
+                try
+                {
+                    var result = Convert.ToInt32(Console.ReadLine());
+                    switch (result)
+                    {
+                        case 1:
+                            string name = Console.ReadLine();
+                            var regPacket = new CMSG_Register() { UserName = name };
+                            Send(regPacket.Serialize());
+                            break;
+                        case 2:
+                            string loginName = Console.ReadLine();
+                            var loginPacket = new CMSG_Login() { UserName = loginName };
+                            Send(loginPacket.Serialize());
+                            break;
+                    }
+                }
+                catch
+                {
+                }
+            }
 
             while(true)
             {
@@ -88,7 +110,6 @@ namespace Client
             byte[] dataBuff = new byte[received];
             Array.Copy(_buffer, dataBuff, received);
 
-
             //Initialize packet
             BasePacket packet = null;
 
@@ -98,17 +119,11 @@ namespace Client
 
                 packet = dataBuff.Deserialize();
 
-                if(packet.Id == OpCodes.SMSG_Message)
-                {
-                    var v = packet as SMSG_Message;
-                    Console.WriteLine(v.GetTimestamp().ToString("dd/MM/yyyy hh:mm:ss") + " | " + v.Message);
-                }
-
-                var test = packet.Execute(ref c);
-                if (test != null)
+                var test = packet.Execute();
+                if (test != null && test.byteResult != null && test.byteResult.Length != 0)
                 {
                     //send bytes
-                    Send(test);
+                    Send(test.byteResult);
                 }
                 else
                 {
@@ -124,10 +139,9 @@ namespace Client
 
         private static void Send(byte[] data)
         {
-
             //data.PrintData(true);
-
-            _clientSocket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(SendCallback), _clientSocket);
+            if(data != null && data.Length != 0)
+                _clientSocket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(SendCallback), _clientSocket);
         }
 
         private static void SendCallback(IAsyncResult ar)
