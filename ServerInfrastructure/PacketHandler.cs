@@ -1,5 +1,6 @@
 ﻿using Infrastructure;
 using Infrastructure.Handles;
+using Infrastructure.Models;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Login;
 using Infrastructure.Packets.Message;
@@ -7,13 +8,11 @@ using Infrastructure.Packets.Register;
 using ServerInfrastructure.Handles;
 using System;
 using System.Collections.Generic;
-using System.Text;
-
 namespace ServerInfrastructure
 {
     public static class PacketHandler
     {
-        public delegate byte[] GenericDelegate(BasePacket bp, ref Connection c);
+        public delegate Result GenericDelegate(BasePacket bp, ref Connection c);
 
         public static Dictionary<OpCodes, OpCodeFunction> packets = new Dictionary<OpCodes, OpCodeFunction>()
         {
@@ -43,7 +42,7 @@ namespace ServerInfrastructure
     }
     public static class PacketOperations
     {
-        public static byte[] Execute(this BasePacket bp, ref Connection c)
+        public static Result Execute(this BasePacket bp, Connection c)
         {
             try
             {

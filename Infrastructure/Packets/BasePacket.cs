@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Infrastructure.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -21,6 +22,11 @@ namespace Infrastructure.Packets
         public DateTime GetTimestamp()
         {
             return new DateTime(Ticks);
+        }
+
+        public string GetData()
+        {
+            return string.Format("{0}", Helper.GetObjectProps(this));
         }
     }
 }

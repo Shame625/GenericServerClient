@@ -2,6 +2,7 @@
 using DatabaseCore.Models;
 using Infrastructure;
 using Infrastructure.Enums;
+using Infrastructure.Models;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Register;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace ServerInfrastructure.Handles
 {
     public static class RegisterHandle
     {
-        public static byte[] RegisterChallange(BasePacket bp, ref Connection c)
+        public static Result RegisterChallange(BasePacket bp, ref Connection c)
         {
             var registerPacket = (CMSG_Register)bp;
 
@@ -35,7 +36,7 @@ namespace ServerInfrastructure.Handles
                 }
             }
 
-            return response.Serialize();
+            return new Result() { ByteResult = response.Serialize(), IsVoidResult = false };
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿using Infrastructure.Helpers;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.InteropServices;
 
 namespace Infrastructure.Packets.Message
 {

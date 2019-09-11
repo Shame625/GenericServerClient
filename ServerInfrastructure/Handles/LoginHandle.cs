@@ -1,4 +1,5 @@
 ﻿using DatabaseCore;
+using Infrastructure.Models;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Login;
 using System.Linq;
@@ -7,7 +8,7 @@ namespace Infrastructure.Handles
 {
     public static class LoginHandle
     {
-        public static byte[] LoginChallenge(BasePacket bp, ref Connection c)
+        public static Result LoginChallenge(BasePacket bp, ref Connection c)
         {
             var loginPacket = (CMSG_Login)bp;
 
@@ -24,7 +25,7 @@ namespace Infrastructure.Handles
                 }
             }
 
-            return response.Serialize();
+            return new Result() { ByteResult = response.Serialize(), IsVoidResult = false };
         }
     }
 }

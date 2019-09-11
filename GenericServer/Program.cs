@@ -4,7 +4,7 @@ namespace GenericServer
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             Server.StartServer();
 

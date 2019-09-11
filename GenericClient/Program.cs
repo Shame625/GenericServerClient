@@ -5,8 +5,6 @@ using Infrastructure.Packets.Login;
 using Infrastructure.Packets.Message;
 using Infrastructure.Packets.Register;
 using System;
-using System.IO;
-using System.IO.Compression;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -19,13 +17,12 @@ namespace Client
         private static readonly byte[] _buffer = new byte[1024];
         public static Connection c = new Connection(null);
 
-        static void Main(string[] args)
+        static void Main()
         {
             Connect();
 
-            System.Threading.Thread.Sleep(2000);
+            Thread.Sleep(2000);
 
-            
             while (ClientStates.loginStatus == -1)
             {
                 Console.WriteLine("1. Register\n2. Login");
@@ -54,11 +51,8 @@ namespace Client
             while(true)
             {
                 var b = Console.ReadLine();
-
                 Send(new CMSG_Message() { Message = b }.Serialize());
             }
-
-            Console.ReadKey();
         }
 
         static void Connect()
@@ -120,10 +114,10 @@ namespace Client
                 packet = dataBuff.Deserialize();
 
                 var test = packet.Execute();
-                if (test != null && test.byteResult != null && test.byteResult.Length != 0)
+                if (test != null && test.ByteResult != null && test.ByteResult.Length != 0)
                 {
                     //send bytes
-                    Send(test.byteResult);
+                    Send(test.ByteResult);
                 }
                 else
                 {

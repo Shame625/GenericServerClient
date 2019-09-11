@@ -1,4 +1,5 @@
 ﻿using Infrastructure;
+using Infrastructure.Models;
 using Microsoft.Extensions.Configuration;
 using ServerInfrastructure;
 using System;
@@ -57,7 +58,7 @@ namespace GenericServer
             {
                 client = ((Socket)AR.AsyncState).HandleSocket();
 
-                int received = client.socket.EndReceive(AR);
+                int received = client.Socket.EndReceive(AR);
 
                 if (received == 0)
                 {
@@ -73,12 +74,13 @@ namespace GenericServer
                     Console.WriteLine("Client: " + client.GetHashCode());
                     dataBuff.PrintData(false);
                     var receivedPacket = dataBuff.Deserialize();
+                    Console.WriteLine(receivedPacket.GetData());
                     Console.WriteLine("-----------------------------");
 
-                    var data = receivedPacket.Execute(ref client);
+                    var data = receivedPacket.Execute(client);
 
                     //Send data
-                    if (data != null)
+                    if (data != null && !data.IsVoidResult)
                     {
                         //send to all users
                         if (PacketHandler.packets[receivedPacket.Id].global)
@@ -89,7 +91,7 @@ namespace GenericServer
                                 data.SendPacket(ref temp);
                             }
                         }
-                        //send to caller
+                        //return to sender
                         else
                         {
                             data.SendPacket(ref client);
@@ -98,14 +100,14 @@ namespace GenericServer
                 }
 
                 //Continue recieving data for client.
-                client.socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, ReceiveCallback, client.socket);
+                client.Socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, ReceiveCallback, client.Socket);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 if (client != null)
                 {
-                    Connections.connectedClients.Remove(client.socket);
+                    Connections.connectedClients.Remove(client.Socket);
                     ServerHelper.UpdateConsoleTitle(Connections.connectedClients.Count);
                 }
             }
@@ -114,7 +116,7 @@ namespace GenericServer
         {
             try
             {
-                client.socket.BeginSend(data, 0, data.Length, SocketFlags.None, new AsyncCallback(SendCallback), client.socket);
+                client.Socket.BeginSend(data, 0, data.Length, SocketFlags.None, new AsyncCallback(SendCallback), client.Socket);
                 data.PrintData(true);
             }
             catch (Exception e)
@@ -149,6 +151,11 @@ namespace GenericServer
                 Connections.connectedClients[socket] = new Connection(socket);
                 return Connections.connectedClients[socket];
             }
+        }
+
+        static void SendPacket(this Result result, ref Connection c)
+        {
+            result.ByteResult.SendPacket(ref c);
         }
     }
 }
