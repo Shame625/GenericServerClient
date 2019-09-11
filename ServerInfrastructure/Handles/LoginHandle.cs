@@ -25,7 +25,7 @@ namespace Infrastructure.Handles
                 }
             }
 
-            return new Result() { ByteResult = response.Serialize(), IsVoidResult = false };
+            return new Result() { Packet = response, ByteResult = response.Serialize(), IsVoidResult = false };
         }
     }
 }

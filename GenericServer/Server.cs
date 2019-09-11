@@ -156,6 +156,7 @@ namespace GenericServer
         static void SendPacket(this Result result, ref Connection c)
         {
             result.ByteResult.SendPacket(ref c);
+            Console.WriteLine(result.Packet.GetData());
         }
     }
 }

@@ -18,13 +18,13 @@ namespace Infrastructure.Helpers
             foreach (var prop in props)
             {
                 object propValue = prop.GetValue(obj, null);
-                temp += string.Format("[{0} | {1}] ", prop.Name, propValue);
+                temp += string.Format("[{0} | {1}] ", prop.Name, propValue.ToString());
             }
 
             foreach(var field in fields)
             {
-                object propValue = field.GetValue(obj);
-                temp += string.Format("[{0} | {1}] ", field.Name, propValue);
+                object fieldValue = field.GetValue(obj);
+                temp += string.Format("[{0} | {1}] ", field.Name, fieldValue.ToString());
             }
 
             return temp;
