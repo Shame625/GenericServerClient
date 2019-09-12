@@ -14,7 +14,7 @@ namespace Client
     class Program
     {
         private static Socket _clientSocket;
-        private static readonly byte[] _buffer = new byte[1024];
+        private static readonly byte[] _buffer = new byte[10000];
         public static Connection c = new Connection(null);
 
         static void Main()
@@ -51,7 +51,15 @@ namespace Client
             while(true)
             {
                 var b = Console.ReadLine();
-                Send(new CMSG_Message() { Message = b }.Serialize());
+
+                if (b == "MSGHISTORY")
+                {
+                    Send(new CMSG_LastMessages().Serialize());
+                }
+                else
+                {
+                    Send(new CMSG_Message() { Message = b }.Serialize());
+                }
             }
         }
 

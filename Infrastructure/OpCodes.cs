@@ -16,7 +16,9 @@ namespace Infrastructure
         SMSG_Register = 0x0021,
 
         CMSG_Message = 0x1000,
-        SMSG_Message = 0x1001
+        SMSG_Message = 0x1001,
+        CMSG_LastMessages = 0x1002,
+        SMSG_LastMessages = 0x1003,
     }
 
     public static class PacketStorage
@@ -30,7 +32,10 @@ namespace Infrastructure
             {OpCodes.SMSG_Register, typeof(SMSG_Register)},
 
             {OpCodes.CMSG_Message, typeof(CMSG_Message)},
-            {OpCodes.SMSG_Message, typeof(SMSG_Message)}
+            {OpCodes.SMSG_Message, typeof(SMSG_Message)},
+
+            {OpCodes.CMSG_LastMessages, typeof(CMSG_LastMessages)},
+            {OpCodes.SMSG_LastMessages, typeof(SMSG_LastMessages)}
         };
     }
 }

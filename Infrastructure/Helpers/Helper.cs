@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -24,7 +26,25 @@ namespace Infrastructure.Helpers
             foreach(var field in fields)
             {
                 object fieldValue = field.GetValue(obj);
-                temp += string.Format("[{0} | {1}] ", field.Name, fieldValue != null ? fieldValue.ToString() : "");
+                if(fieldValue.GetType().IsArray)
+                {
+                    var values = (IEnumerable)field.GetValue(obj);
+
+                    var tempList = new List<string>();
+
+                    foreach(dynamic v in values)
+                    {
+                        tempList.Add(v.Value.ToString());
+                    }
+                    var stringValue = string.Join(", ", tempList);
+
+                    temp += string.Format("[{0} | Collection: [{1}]] ", field.Name, fieldValue != null ? stringValue : "");
+                }
+                else
+                {
+                    fieldValue = field.GetValue(obj);
+                    temp += string.Format("[{0} | {1}] ", field.Name, fieldValue != null ? fieldValue.ToString() : "");
+                }
             }
 
             return temp;

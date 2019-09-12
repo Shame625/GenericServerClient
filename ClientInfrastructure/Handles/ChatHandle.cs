@@ -15,5 +15,18 @@ namespace ClientInfrastructure.Handles
 
             return new Result { IsVoidResult = true };
         }
+
+        internal static Result LastMessages(BasePacket bp)
+        {
+            var messagePacket = (SMSG_LastMessages)bp;
+
+            int i = 0;
+            foreach(var m in messagePacket.Messages)
+            {
+                i++;
+                Console.WriteLine(i + ". " + m);
+            }
+            return new Result { IsVoidResult = true };
+        }
     }
 }

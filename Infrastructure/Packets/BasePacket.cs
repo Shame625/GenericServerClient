@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Infrastructure.Packets
 {
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public abstract class BasePacket
     {
         public OpCodes Id { get; set; }

@@ -28,5 +28,19 @@ namespace ServerInfrastructure.Handles
 
             return new Result { Packet = response, IsVoidResult = false };
         }
+        public async static Task<Result> LastMessages(BasePacket bp, Connection c)
+        {
+            var messagePacket = (CMSG_LastMessages)bp;
+
+            var response = new SMSG_LastMessages() { };
+
+            using (var context = new ApplicationContext())
+            {
+                var lastMessages = context.Messages.OrderByDescending(o => o.InsertDate).Take(10).Select(o => new MessageHistory { Value = o.Text }).ToArray();
+                response.Messages = lastMessages;
+            }
+
+            return new Result { Packet = response, IsVoidResult = false };
+        }
     }
 }

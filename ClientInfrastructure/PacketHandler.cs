@@ -26,6 +26,9 @@ namespace ClientInfrastructure
 
             { OpCodes.CMSG_Message, new OpCodeFunction(typeof(CMSG_Message), null) },
             { OpCodes.SMSG_Message, new OpCodeFunction(typeof(SMSG_Message), ChatHandle.MessageRecived) },
+
+            { OpCodes.CMSG_LastMessages, new OpCodeFunction(typeof(CMSG_LastMessages), null) },
+            { OpCodes.SMSG_LastMessages, new OpCodeFunction(typeof(SMSG_LastMessages), ChatHandle.LastMessages) },
         };
 
         public class OpCodeFunction
