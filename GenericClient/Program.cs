@@ -114,10 +114,10 @@ namespace Client
                 packet = dataBuff.Deserialize();
 
                 var test = packet.Execute();
-                if (test != null && test.ByteResult != null && test.ByteResult.Length != 0)
+                if (test != null && test.PacketBytes != null && test.PacketBytes.Length != 0)
                 {
                     //send bytes
-                    Send(test.ByteResult);
+                    Send(test.PacketBytes);
                 }
                 else
                 {

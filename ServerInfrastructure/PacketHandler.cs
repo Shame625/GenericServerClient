@@ -8,6 +8,8 @@ using Infrastructure.Packets.Register;
 using ServerInfrastructure.Handles;
 using System;
 using System.Collections.Generic;
+using static Infrastructure.Enums.Enums;
+
 namespace ServerInfrastructure
 {
     public static class PacketHandler
@@ -22,21 +24,21 @@ namespace ServerInfrastructure
             { OpCodes.CMSG_Register, new OpCodeFunction(typeof(SMSG_Register), RegisterHandle.RegisterChallange) },
             { OpCodes.SMSG_Register, new OpCodeFunction(typeof(SMSG_Register), null) },
 
-            { OpCodes.CMSG_Message, new OpCodeFunction(typeof(CMSG_Message), ChatHandle.MessageSent, true) },
-            { OpCodes.SMSG_Message, new OpCodeFunction(typeof(SMSG_Message), null) },
+            { OpCodes.CMSG_Message, new OpCodeFunction(typeof(CMSG_Message), ChatHandle.MessageSent, PacketType.Local) },
+            { OpCodes.SMSG_Message, new OpCodeFunction(typeof(SMSG_Message), null, PacketType.Local) },
         };
 
         public class OpCodeFunction
         {
             public Type type;
             public GenericDelegate operation;
-            public bool global;
+            public PacketType packetType;
 
-            public OpCodeFunction(Type type, GenericDelegate operation, bool global = false)
+            public OpCodeFunction(Type type, GenericDelegate operation, PacketType packetType = PacketType.ReturnToSender)
             {
                 this.type = type;
                 this.operation = operation;
-                this.global = global;
+                this.packetType = packetType;
             }
         }
     }

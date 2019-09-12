@@ -24,7 +24,7 @@ namespace Infrastructure.Helpers
             foreach(var field in fields)
             {
                 object fieldValue = field.GetValue(obj);
-                temp += string.Format("[{0} | {1}] ", field.Name, fieldValue.ToString());
+                temp += string.Format("[{0} | {1}] ", field.Name, fieldValue != null ? fieldValue.ToString() : "");
             }
 
             return temp;

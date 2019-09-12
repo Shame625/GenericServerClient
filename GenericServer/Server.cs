@@ -8,30 +8,26 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using GenericServer.Extensions;
 
 namespace GenericServer
 {
     public static class Server
     {
-        public static IConfiguration config;
+        public static long NumberOfConnections = 0;
+        public static long TotalPacketsSent = 0;
+        public static long TotalPacketsRec = 0;
+
         static readonly Socket serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         static byte[] buffer;
         public static void StartServer()
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json");
-
-            config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", true, true)
-                .Build();
-
             Console.WriteLine("Setting up server...");
-            Console.WriteLine("Receive buffer size set to " + config["bufferSize"] + " bytes.");
-            Console.WriteLine("Listening to port: " + config["serverPort"]);
-            buffer = new byte[Convert.ToInt32(config["bufferSize"])];
+            Console.WriteLine("Receive buffer size set to " + Program.config["bufferSize"] + " bytes.");
+            Console.WriteLine("Listening to port: " + Program.config["serverPort"]);
+            buffer = new byte[Convert.ToInt32(Program.config["bufferSize"])];
 
-            serverSocket.Bind(new IPEndPoint(IPAddress.Any, Convert.ToInt32(config["serverPort"])));
+            serverSocket.Bind(new IPEndPoint(IPAddress.Any, Convert.ToInt32(Program.config["serverPort"])));
             serverSocket.Listen(1000);
 
             serverSocket.BeginAccept(new AsyncCallback(AcceptCallback), null);
@@ -44,7 +40,9 @@ namespace GenericServer
 
             if (socket.Connect())
             {
-                ServerHelper.UpdateConsoleTitle(Connections.connectedClients.Count);
+                NumberOfConnections = Connections.connectedClients.Count;
+                ServerHelper.UpdateConsoleTitle();
+
                 socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), socket);
             }
 
@@ -70,37 +68,40 @@ namespace GenericServer
                     byte[] dataBuff = new byte[received];
                     Array.Copy(buffer, dataBuff, received);
 
-                    Console.WriteLine("-----------------------------");
-                    Console.WriteLine("Client: " + client.GetHashCode());
-                    dataBuff.PrintData(false);
+                    //dataBuff.PrintData(false);
                     var receivedPacket = dataBuff.Deserialize();
-                    Console.WriteLine(receivedPacket.GetData());
-                    Console.WriteLine("-----------------------------");
-
+                    TotalPacketsRec++;
                     var data = receivedPacket.Execute(client);
+
+
+                    var packetType = receivedPacket.GetPacketType();
+                    ServerHelper.PrintPacketData(ref client, receivedPacket.GetData(), false, packetType);
 
                     //Send data
                     if (data != null && !data.IsVoidResult)
                     {
-                        //send to all users
-                        if (PacketHandler.packets[receivedPacket.Id].global)
+                        switch (packetType)
                         {
-                            foreach(var v in Connections.connectedClients)
-                            {
-                                var temp = v.Value;
-                                data.SendPacket(ref temp);
-                            }
-                        }
-                        //return to sender
-                        else
-                        {
-                            data.SendPacket(ref client);
+                            case Infrastructure.Enums.Enums.PacketType.Local:
+                                foreach (var v in Connections.connectedClients)
+                                {
+                                    var temp = v.Value;
+                                    data.SendPacket(ref temp);
+                                    TotalPacketsSent++;
+                                }
+                                break;
+                            case Infrastructure.Enums.Enums.PacketType.ReturnToSender:
+                                data.SendPacket(ref client);
+                                TotalPacketsSent++;
+                                break;
                         }
                     }
                 }
 
                 //Continue recieving data for client.
                 client.Socket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, ReceiveCallback, client.Socket);
+
+                ServerHelper.UpdateConsoleTitle();
             }
             catch (Exception ex)
             {
@@ -108,7 +109,8 @@ namespace GenericServer
                 if (client != null)
                 {
                     Connections.connectedClients.Remove(client.Socket);
-                    ServerHelper.UpdateConsoleTitle(Connections.connectedClients.Count);
+                    NumberOfConnections = Connections.connectedClients.Count;
+                    ServerHelper.UpdateConsoleTitle();
                 }
             }
         }
@@ -117,7 +119,7 @@ namespace GenericServer
             try
             {
                 client.Socket.BeginSend(data, 0, data.Length, SocketFlags.None, new AsyncCallback(SendCallback), client.Socket);
-                data.PrintData(true);
+                //data.PrintData(true);
             }
             catch (Exception e)
             {
@@ -138,25 +140,10 @@ namespace GenericServer
             }
         }
 
-        static Connection HandleSocket(this Socket socket)
-        {
-            //Check if client is already in dictionary, if not add him
-            try
-            {
-                return Connections.connectedClients[socket];
-            }
-            //If it is not in dictionary, add, return
-            catch
-            {
-                Connections.connectedClients[socket] = new Connection(socket);
-                return Connections.connectedClients[socket];
-            }
-        }
-
         static void SendPacket(this Result result, ref Connection c)
         {
-            result.ByteResult.SendPacket(ref c);
-            Console.WriteLine(result.Packet.GetData());
+            result.PacketBytes.SendPacket(ref c);
+            ServerHelper.PrintPacketData(ref c, result.Packet.GetData(), true, result.Packet.GetPacketType());
         }
     }
 }

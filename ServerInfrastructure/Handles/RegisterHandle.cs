@@ -27,7 +27,7 @@ namespace ServerInfrastructure.Handles
                 }
                 else
                 {
-                    var newUser = new User() { UserName = registerPacket.UserName };
+                    var newUser = new DatabaseCore.Models.User() { UserName = registerPacket.UserName };
                     context.Users.Add(newUser);
                     context.SaveChanges();
 
@@ -36,7 +36,7 @@ namespace ServerInfrastructure.Handles
                 }
             }
 
-            return new Result() { Packet = response, ByteResult = response.Serialize(), IsVoidResult = false };
+            return new Result() { Packet = response, IsVoidResult = false };
         }
     }
 }

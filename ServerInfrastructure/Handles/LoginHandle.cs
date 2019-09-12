@@ -21,11 +21,11 @@ namespace Infrastructure.Handles
                 {
                     response.UserName = loginPacket.UserName;
                     response.status = Enums.Enums.LoginStatus.Ok;
-                    c.User = userObject;
+                    c.User = new User { UserId = userObject.UserId, UserName = userObject.UserName };
                 }
             }
 
-            return new Result() { Packet = response, ByteResult = response.Serialize(), IsVoidResult = false };
+            return new Result() { Packet = response, IsVoidResult = false };
         }
     }
 }

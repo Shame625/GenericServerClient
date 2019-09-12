@@ -19,7 +19,7 @@ namespace ServerInfrastructure.Handles
 
             }
 
-            return new Result() { Packet = response, ByteResult = response.Serialize(), IsVoidResult = false };
+            return new Result() { Packet = response, IsVoidResult = false };
         }
     }
 }

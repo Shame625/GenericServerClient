@@ -17,5 +17,12 @@ namespace Infrastructure.Enums
             AlreadyExists,
             Ok
         }
+
+        public enum PacketType : UInt16
+        {
+            Nothing,
+            ReturnToSender,
+            Local
+        }
     }
 }
