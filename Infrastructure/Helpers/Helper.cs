@@ -26,7 +26,7 @@ namespace Infrastructure.Helpers
             foreach(var field in fields)
             {
                 object fieldValue = field.GetValue(obj);
-                if(fieldValue.GetType().IsArray)
+                if(fieldValue != null && fieldValue.GetType().IsArray)
                 {
                     var values = (IEnumerable)field.GetValue(obj);
 
