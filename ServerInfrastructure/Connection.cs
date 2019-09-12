@@ -1,5 +1,4 @@
 ﻿using DatabaseCore.Models;
-using System;
 using System.Net.Sockets;
 
 namespace ServerInfrastructure
@@ -17,7 +16,7 @@ namespace ServerInfrastructure
         {
             get
             {
-                if(User != null && User.UserId != Guid.Empty)
+                if(User != null && User.UserId != 0)
                 {
                     return GetHashCode().ToString() + " | " + User.UserId + " | " + User.UserName;
                 }

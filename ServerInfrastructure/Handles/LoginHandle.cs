@@ -18,7 +18,8 @@ namespace Infrastructure.Handles
 
             using (var context = new ApplicationContext())
             {
-                var userObject = context.Users.FirstOrDefault(o => o.UserName == loginPacket.UserName);
+                var userObject = context.Users.SingleOrDefault(o => o.UserName == loginPacket.UserName);
+
                 if(userObject != null)
                 {
                     response.UserName = loginPacket.UserName;

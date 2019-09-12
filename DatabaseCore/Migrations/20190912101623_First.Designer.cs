@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseCore.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190912095656_first")]
-    partial class first
+    [Migration("20190912101623_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,8 +23,9 @@ namespace DatabaseCore.Migrations
 
             modelBuilder.Entity("DatabaseCore.Models.Message", b =>
                 {
-                    b.Property<Guid>("MessageId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<long>("MessageId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("InsertDate")
                         .ValueGeneratedOnAddOrUpdate();
@@ -32,7 +33,7 @@ namespace DatabaseCore.Migrations
                     b.Property<string>("Text")
                         .HasMaxLength(256);
 
-                    b.Property<Guid?>("UserId");
+                    b.Property<long?>("UserId");
 
                     b.HasKey("MessageId");
 
@@ -43,8 +44,9 @@ namespace DatabaseCore.Migrations
 
             modelBuilder.Entity("DatabaseCore.Models.User", b =>
                 {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<long>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("UserName")
                         .HasMaxLength(32);
