@@ -6,12 +6,13 @@ using Infrastructure.Models;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Register;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ServerInfrastructure.Handles
 {
     public static class RegisterHandle
     {
-        public static Result RegisterChallange(BasePacket bp, ref Connection c)
+        public async static Task<Result> RegisterChallange(BasePacket bp, Connection c)
         {
             var registerPacket = (CMSG_Register)bp;
 
@@ -28,15 +29,15 @@ namespace ServerInfrastructure.Handles
                 else
                 {
                     var newUser = new DatabaseCore.Models.User() { UserName = registerPacket.UserName };
-                    context.Users.Add(newUser);
-                    context.SaveChanges();
+                    await context.Users.AddAsync(newUser);
+                    await context.SaveChangesAsync();
 
                     response.status = Enums.RegistrationStatus.Ok;
                     response.Token = "TESTTOKEN";
                 }
             }
 
-            return new Result() { Packet = response, IsVoidResult = false };
+            return new Result { Packet = response, IsVoidResult = false };
         }
     }
 }

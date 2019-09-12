@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Models;
 using System.Net.Sockets;
 
-namespace Infrastructure
+namespace ClientInfrastructure
 {
     public class Connection
     {

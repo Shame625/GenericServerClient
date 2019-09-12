@@ -1,14 +1,16 @@
 ﻿using DatabaseCore;
-using Infrastructure.Models;
+using DatabaseCore.Models;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Login;
+using ServerInfrastructure;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Handles
 {
     public static class LoginHandle
     {
-        public static Result LoginChallenge(BasePacket bp, ref Connection c)
+        public async static Task<Models.Result> LoginChallenge(BasePacket bp, Connection c)
         {
             var loginPacket = (CMSG_Login)bp;
 
@@ -25,7 +27,7 @@ namespace Infrastructure.Handles
                 }
             }
 
-            return new Result() { Packet = response, IsVoidResult = false };
+            return new Models.Result { Packet = response, IsVoidResult = false };
         }
     }
 }

@@ -10,10 +10,15 @@ namespace DatabaseCore.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long UserId { get; set; }
+        public Guid UserId { get; set; }
         [MaxLength(32)]
         public string UserName { get; set; }
 
-        public List<Message> Messages { get; set; }
+        public ICollection<Message> Messages { get; set; }
+
+        public User()
+        {
+            Messages = new List<Message>();
+        }
     }
 }

@@ -114,7 +114,7 @@ namespace Client
                 packet = dataBuff.Deserialize();
 
                 var test = packet.Execute();
-                if (test != null && test.PacketBytes != null && test.PacketBytes.Length != 0)
+                if (!test.IsVoidResult)
                 {
                     //send bytes
                     Send(test.PacketBytes);

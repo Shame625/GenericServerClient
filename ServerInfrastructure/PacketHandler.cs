@@ -8,13 +8,14 @@ using Infrastructure.Packets.Register;
 using ServerInfrastructure.Handles;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using static Infrastructure.Enums.Enums;
 
 namespace ServerInfrastructure
 {
     public static class PacketHandler
     {
-        public delegate Result GenericDelegate(BasePacket bp, ref Connection c);
+        public delegate Task<Result> GenericDelegate(BasePacket bp, Connection c);
 
         public static Dictionary<OpCodes, OpCodeFunction> packets = new Dictionary<OpCodes, OpCodeFunction>()
         {
@@ -44,11 +45,11 @@ namespace ServerInfrastructure
     }
     public static class PacketOperations
     {
-        public static Result Execute(this BasePacket bp, Connection c)
+        public static Task<Result> Execute(this BasePacket bp, Connection c)
         {
             try
             {
-                return PacketHandler.packets[bp.Id].operation(bp, ref c);
+                return PacketHandler.packets[bp.Id].operation(bp, c);
             }
             catch
             {

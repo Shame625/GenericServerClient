@@ -71,7 +71,7 @@ namespace GenericServer
                     //dataBuff.PrintData(false);
                     var receivedPacket = dataBuff.Deserialize();
                     TotalPacketsRec++;
-                    var data = receivedPacket.Execute(client);
+                    var data = receivedPacket.Execute(client).Result;
 
 
                     var packetType = receivedPacket.GetPacketType();
@@ -125,7 +125,7 @@ namespace GenericServer
                 }
             }
         }
-        public static void SendPacket(this byte[] data, ref Connection client)
+        public static void SendPacket(this byte[] data, ref ServerInfrastructure.Connection client)
         {
             try
             {

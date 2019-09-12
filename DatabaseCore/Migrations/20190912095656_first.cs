@@ -1,10 +1,9 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DatabaseCore.Migrations
 {
-    public partial class all : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,8 +11,7 @@ namespace DatabaseCore.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<Guid>(nullable: false),
                     UserName = table.Column<string>(maxLength: 32, nullable: true)
                 },
                 constraints: table =>
@@ -25,10 +23,10 @@ namespace DatabaseCore.Migrations
                 name: "Messages",
                 columns: table => new
                 {
-                    MessageId = table.Column<decimal>(nullable: false),
+                    MessageId = table.Column<Guid>(nullable: false),
                     Text = table.Column<string>(maxLength: 256, nullable: true),
-                    InsertDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<long>(nullable: true)
+                    InsertDate = table.Column<DateTime>(nullable: false, defaultValueSql: "GETDATE()" ),
+                    UserId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DatabaseCore.Models
 {
@@ -10,7 +8,7 @@ namespace DatabaseCore.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public ulong MessageId { get; set; }
+        public Guid MessageId { get; set; }
 
         [MaxLength(256)]
         public string Text { get; set; }
@@ -18,6 +16,6 @@ namespace DatabaseCore.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime InsertDate { get; set; }
 
-        public User User { get; set; }
+        public virtual User User { get; set; }
     }
 }
