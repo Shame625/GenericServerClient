@@ -22,6 +22,7 @@ namespace Infrastructure.Enums
         {
             Nothing,
             ReturnToSender,
+            Others,
             Local
         }
     }

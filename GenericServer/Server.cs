@@ -78,7 +78,7 @@ namespace GenericServer
                     ServerHelper.PrintPacketData(ref client, receivedPacket.GetData(), false, packetType);
 
                     //Send data
-                    if (data != null && !data.IsVoidResult)
+                    if (!data.IsVoidResult)
                     {
                         switch (packetType)
                         {
@@ -88,6 +88,17 @@ namespace GenericServer
                                     var temp = v.Value;
                                     data.SendPacket(ref temp);
                                     TotalPacketsSent++;
+                                }
+                                break;
+                            case Infrastructure.Enums.Enums.PacketType.Others:
+                                foreach (var v in Connections.connectedClients)
+                                {
+                                    var temp = v.Value;
+                                    if (temp != client)
+                                    {
+                                        data.SendPacket(ref temp);
+                                        TotalPacketsSent++;
+                                    }
                                 }
                                 break;
                             case Infrastructure.Enums.Enums.PacketType.ReturnToSender:

@@ -24,8 +24,8 @@ namespace ServerInfrastructure
             { OpCodes.CMSG_Register, new OpCodeFunction(typeof(SMSG_Register), RegisterHandle.RegisterChallange) },
             { OpCodes.SMSG_Register, new OpCodeFunction(typeof(SMSG_Register), null) },
 
-            { OpCodes.CMSG_Message, new OpCodeFunction(typeof(CMSG_Message), ChatHandle.MessageSent, PacketType.Local) },
-            { OpCodes.SMSG_Message, new OpCodeFunction(typeof(SMSG_Message), null, PacketType.Local) },
+            { OpCodes.CMSG_Message, new OpCodeFunction(typeof(CMSG_Message), ChatHandle.MessageSent, PacketType.Others) },
+            { OpCodes.SMSG_Message, new OpCodeFunction(typeof(SMSG_Message), null, PacketType.Others) },
         };
 
         public class OpCodeFunction
