@@ -5,6 +5,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using GenericServer.Extensions;
+using Infrastructure.Enums;
 
 namespace GenericServer
 {
@@ -78,7 +79,7 @@ namespace GenericServer
                     {
                         switch (packetType)
                         {
-                            case Infrastructure.Enums.Enums.PacketType.Local:
+                            case PacketType.Local:
                                 foreach (var v in Connections.connectedClients)
                                 {
                                     var temp = v.Value;
@@ -86,7 +87,7 @@ namespace GenericServer
                                     TotalPacketsSent++;
                                 }
                                 break;
-                            case Infrastructure.Enums.Enums.PacketType.Others:
+                            case PacketType.Others:
                                 foreach (var v in Connections.connectedClients)
                                 {
                                     var temp = v.Value;
@@ -97,7 +98,7 @@ namespace GenericServer
                                     }
                                 }
                                 break;
-                            case Infrastructure.Enums.Enums.PacketType.ReturnToSender:
+                            case PacketType.ReturnToSender:
                                 data.SendPacket(ref client);
                                 TotalPacketsSent++;
                                 break;

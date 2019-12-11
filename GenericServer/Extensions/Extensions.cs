@@ -1,10 +1,6 @@
-﻿using Infrastructure;
-using Infrastructure.Packets;
+﻿using Infrastructure.Packets;
 using ServerInfrastructure;
-using System;
-using System.Collections.Generic;
 using System.Net.Sockets;
-using System.Text;
 using static Infrastructure.Enums.Enums;
 
 namespace GenericServer.Extensions

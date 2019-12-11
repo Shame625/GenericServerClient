@@ -1,5 +1,6 @@
 ﻿using DatabaseCore;
 using DatabaseCore.Models;
+using Infrastructure.Enums;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Login;
 using ServerInfrastructure;
@@ -14,7 +15,7 @@ namespace Infrastructure.Handles
         {
             var loginPacket = (CMSG_Login)bp;
 
-            var response = new SMSG_Login() { status = Enums.Enums.LoginStatus.Fail };
+            var response = new SMSG_Login() { status = LoginStatus.Fail };
 
             using (var context = new ApplicationContext())
             {
@@ -23,7 +24,7 @@ namespace Infrastructure.Handles
                 if(userObject != null)
                 {
                     response.UserName = loginPacket.UserName;
-                    response.status = Enums.Enums.LoginStatus.Ok;
+                    response.status = LoginStatus.Ok;
                     c.User = new User { UserId = userObject.UserId, UserName = userObject.UserName };
                 }
             }

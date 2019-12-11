@@ -1,29 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Infrastructure.Enums
 {
-    public static class Enums
+    public enum LoginStatus : UInt16
     {
-        public enum LoginStatus : UInt16
-        {
-            Fail,
-            Ok
-        }
-        public enum RegistrationStatus : UInt16
-        {
-            Fail,
-            AlreadyExists,
-            Ok
-        }
+        Fail,
+        Ok
+    }
+    public enum RegistrationStatus : UInt16
+    {
+        Fail,
+        AlreadyExists,
+        Ok
+    }
 
-        public enum PacketType : UInt16
-        {
-            Nothing,
-            ReturnToSender,
-            Others,
-            Local
-        }
+    public enum PacketType : UInt16
+    {
+        Nothing,
+        ReturnToSender,
+        Others,
+        Local
     }
 }
