@@ -68,9 +68,9 @@ namespace Client
         {
             _clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            var ipAddress = Dns.GetHostEntry(hostNameOrAddress: "brane1.westeurope.cloudapp.azure.com").AddressList.First();
-            IPEndPoint endPoint = new IPEndPoint(ipAddress, 50000);
-            //IPEndPoint endPoint = new IPEndPoint(IPAddress.Loopback, 50000);
+            //var ipAddress = Dns.GetHostEntry(hostNameOrAddress: "brane1.westeurope.cloudapp.azure.com").AddressList.First();
+            //IPEndPoint endPoint = new IPEndPoint(ipAddress, 50000);
+            IPEndPoint endPoint = new IPEndPoint(IPAddress.Loopback, 50000);
 
             if (_clientSocket.Connected)
                 _clientSocket.Close();

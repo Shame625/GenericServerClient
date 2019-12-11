@@ -18,7 +18,7 @@ namespace ServerInfrastructure.Handles
 
             using (var context = new ApplicationContext())
             {
-                var dbUser = context.Users.SingleOrDefault(o => o == new GenericEntity.Dbo.User() { UserName = c.User.UserName});
+                var dbUser = context.Users.SingleOrDefault(o => o.Id == c.User.UserId);
                 var message = new Message { Text = messagePacket.Message, User = dbUser };
                 await context.Messages.AddAsync(message);
                 await context.SaveChangesAsync();

@@ -3,7 +3,6 @@ using Infrastructure.Models;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Login;
 using System;
-using System.Linq;
 
 namespace Infrastructure.Handles
 {
