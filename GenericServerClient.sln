@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerInfrastructure", "ServerInfrastructure\ServerInfrastructure.csproj", "{108365E9-3763-41B9-8776-8E5476CB5666}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientInfrastructure", "ClientInfrastructure\ClientInfrastructure.csproj", "{BE77FE64-6A6A-4F3A-B353-BC32F0E0B662}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientInfrastructure", "ClientInfrastructure\ClientInfrastructure.csproj", "{BE77FE64-6A6A-4F3A-B353-BC32F0E0B662}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

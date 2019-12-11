@@ -13,7 +13,6 @@ namespace GenericServer
 
         public static void PrintPacketData(ref Connection c, string data, bool isSent, PacketType packetType = PacketType.Nothing)
         {
-
             Console.ForegroundColor = isSent ? ConsoleColor.DarkRed : ConsoleColor.Green;
             Console.WriteLine("-----------------------------");
             Console.WriteLine("[Client | " + c.ConnectionHandle + "] [PacketType" + " | " + packetType.ToString() + "]");

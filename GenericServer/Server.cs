@@ -1,13 +1,9 @@
 ﻿using Infrastructure;
 using Infrastructure.Models;
-using Microsoft.Extensions.Configuration;
 using ServerInfrastructure;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using GenericServer.Extensions;
 
 namespace GenericServer
@@ -23,11 +19,11 @@ namespace GenericServer
         public static void StartServer()
         {
             Console.WriteLine("Setting up server...");
-            Console.WriteLine("Receive buffer size set to " + Program.config["bufferSize"] + " bytes.");
-            Console.WriteLine("Listening to port: " + Program.config["serverPort"]);
-            buffer = new byte[Convert.ToInt32(Program.config["bufferSize"])];
+            Console.WriteLine("Receive buffer size set to " + ServerSettings.Settings.bufferSize + " bytes.");
+            Console.WriteLine("Listening to port: " + ServerSettings.Settings.serverPort);
+            buffer = new byte[ServerSettings.Settings.bufferSize];
 
-            serverSocket.Bind(new IPEndPoint(IPAddress.Any, Convert.ToInt32(Program.config["serverPort"])));
+            serverSocket.Bind(new IPEndPoint(IPAddress.Any, ServerSettings.Settings.serverPort));
             serverSocket.Listen(1000);
 
             serverSocket.BeginAccept(new AsyncCallback(AcceptCallback), null);
@@ -125,7 +121,7 @@ namespace GenericServer
                 }
             }
         }
-        public static void SendPacket(this byte[] data, ref ServerInfrastructure.Connection client)
+        public static void SendPacket(this byte[] data, ref Connection client)
         {
             try
             {

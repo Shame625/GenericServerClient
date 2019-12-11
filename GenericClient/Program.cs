@@ -5,6 +5,7 @@ using Infrastructure.Packets.Login;
 using Infrastructure.Packets.Message;
 using Infrastructure.Packets.Register;
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -67,8 +68,9 @@ namespace Client
         {
             _clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
-            //IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse("93.142.166.126"), 50000);
-            IPEndPoint endPoint = new IPEndPoint(IPAddress.Loopback, 50000);
+            var ipAddress = Dns.GetHostEntry(hostNameOrAddress: "brane1.westeurope.cloudapp.azure.com").AddressList.First();
+            IPEndPoint endPoint = new IPEndPoint(ipAddress, 50000);
+            //IPEndPoint endPoint = new IPEndPoint(IPAddress.Loopback, 50000);
 
             if (_clientSocket.Connected)
                 _clientSocket.Close();
