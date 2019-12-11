@@ -25,7 +25,7 @@ namespace ClientInfrastructure
             { OpCodes.SMSG_Register, new OpCodeFunction(typeof(SMSG_Register), RegisterHandle.RegisterChallange) },
 
             { OpCodes.CMSG_Message, new OpCodeFunction(typeof(CMSG_Message), null) },
-            { OpCodes.SMSG_Message, new OpCodeFunction(typeof(SMSG_Message), ChatHandle.MessageRecived) },
+            { OpCodes.SMSG_Message, new OpCodeFunction(typeof(SMSG_Message), ChatHandle.MessageReceived) },
 
             { OpCodes.CMSG_LastMessages, new OpCodeFunction(typeof(CMSG_LastMessages), null) },
             { OpCodes.SMSG_LastMessages, new OpCodeFunction(typeof(SMSG_LastMessages), ChatHandle.LastMessages) },

@@ -60,7 +60,7 @@ namespace GenericServer
                     return;
                 }
 
-                //Deserializes recived bytes
+                //Deserializes Received bytes
                 {
                     byte[] dataBuff = new byte[received];
                     Array.Copy(buffer, dataBuff, received);

@@ -8,7 +8,7 @@ namespace ClientInfrastructure.Handles
 {
     public static class ChatHandle
     {
-        public static Result MessageRecived(BasePacket bp)
+        public static Result MessageReceived(BasePacket bp)
         {
             var messagePacket = (SMSG_Message)bp;
             Console.WriteLine(messagePacket.GetTimestamp().ToString("dd/MM/yyyy hh:mm:ss") + " [" + messagePacket.UserName + "]: " + messagePacket.Message);
