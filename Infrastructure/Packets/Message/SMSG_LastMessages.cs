@@ -1,14 +1,15 @@
-﻿using Infrastructure.Helpers;
+﻿using System.Runtime.InteropServices;
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace Infrastructure.Packets.Message
 {
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public class SMSG_LastMessages : BasePacket
     {
-        public SMSG_LastMessages() : base(OpCodes.SMSG_LastMessages) { }
+        public SMSG_LastMessages() : base(OpCodes.SMSG_LastMessages) 
+        {
+        }
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
         public MessageHistory[] Messages;
