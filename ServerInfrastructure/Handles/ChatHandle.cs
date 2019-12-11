@@ -1,10 +1,8 @@
 ﻿using DatabaseCore;
-using DatabaseCore.Models;
-using Infrastructure;
+using GenericEntity.Dbo;
 using Infrastructure.Models;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Message;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +18,7 @@ namespace ServerInfrastructure.Handles
 
             using (var context = new ApplicationContext())
             {
-                var dbUser = context.Users.SingleOrDefault(o => o == c.User);
+                var dbUser = context.Users.SingleOrDefault(o => o == new GenericEntity.Dbo.User() { UserName = c.User.UserName});
                 var message = new Message { Text = messagePacket.Message, User = dbUser };
                 await context.Messages.AddAsync(message);
                 await context.SaveChangesAsync();

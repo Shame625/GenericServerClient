@@ -1,7 +1,7 @@
-﻿using Infrastructure.Packets;
+﻿using Infrastructure.Enums;
+using Infrastructure.Packets;
 using ServerInfrastructure;
 using System.Net.Sockets;
-using static Infrastructure.Enums.Enums;
 
 namespace GenericServer.Extensions
 {

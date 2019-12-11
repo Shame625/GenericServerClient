@@ -1,6 +1,4 @@
 ﻿using DatabaseCore;
-using DatabaseCore.Models;
-using Infrastructure;
 using Infrastructure.Enums;
 using Infrastructure.Models;
 using Infrastructure.Packets;
@@ -16,7 +14,7 @@ namespace ServerInfrastructure.Handles
         {
             var registerPacket = (CMSG_Register)bp;
 
-            var response = new SMSG_Register() { status = Enums.RegistrationStatus.Fail };
+            var response = new SMSG_Register() { status = RegistrationStatus.Fail };
 
             using (var context = new ApplicationContext())
             {
@@ -24,15 +22,15 @@ namespace ServerInfrastructure.Handles
 
                 if (exist)
                 {
-                    response.status = Enums.RegistrationStatus.AlreadyExists;
+                    response.status = RegistrationStatus.AlreadyExists;
                 }
                 else
                 {
-                    var newUser = new DatabaseCore.Models.User() { UserName = registerPacket.UserName };
+                    var newUser = new GenericEntity.Dbo.User() { UserName = registerPacket.UserName };
                     await context.Users.AddAsync(newUser);
                     await context.SaveChangesAsync();
 
-                    response.status = Enums.RegistrationStatus.Ok;
+                    response.status = RegistrationStatus.Ok;
                     response.Token = "TESTTOKEN";
                 }
             }

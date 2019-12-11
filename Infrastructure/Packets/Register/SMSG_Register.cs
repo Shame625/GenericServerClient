@@ -1,5 +1,5 @@
-﻿using System.Runtime.InteropServices;
-using static Infrastructure.Enums.Enums;
+﻿using Infrastructure.Enums;
+using System.Runtime.InteropServices;
 
 namespace Infrastructure.Packets.Register
 {

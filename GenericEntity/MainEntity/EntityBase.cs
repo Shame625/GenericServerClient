@@ -2,20 +2,19 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DatabaseCore.Models
+namespace GenericEntity.MainEntity
 {
-    public class Message
+    public class EntityBase : IEntityBase
     {
+        public EntityBase()
+        {
+            InsertDate = DateTime.Now;
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long MessageId { get; set; }
-
-        [MaxLength(256)]
-        public string Text { get; set; }
-
+        public long Id { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime InsertDate { get; set; }
-
-        public virtual User User { get; set; }
     }
 }

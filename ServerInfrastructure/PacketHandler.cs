@@ -1,4 +1,5 @@
 ﻿using Infrastructure;
+using Infrastructure.Enums;
 using Infrastructure.Handles;
 using Infrastructure.Models;
 using Infrastructure.Packets;
@@ -9,7 +10,6 @@ using ServerInfrastructure.Handles;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static Infrastructure.Enums.Enums;
 
 namespace ServerInfrastructure
 {

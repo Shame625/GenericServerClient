@@ -1,6 +1,6 @@
-﻿using ServerInfrastructure;
+﻿using Infrastructure.Enums;
+using ServerInfrastructure;
 using System;
-using static Infrastructure.Enums.Enums;
 
 namespace GenericServer
 {

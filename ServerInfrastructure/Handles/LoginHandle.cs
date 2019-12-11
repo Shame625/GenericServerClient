@@ -1,5 +1,5 @@
 ﻿using DatabaseCore;
-using DatabaseCore.Models;
+using GenericEntity.Dbo;
 using Infrastructure.Enums;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Login;
@@ -25,7 +25,7 @@ namespace Infrastructure.Handles
                 {
                     response.UserName = loginPacket.UserName;
                     response.status = LoginStatus.Ok;
-                    c.User = new User { UserId = userObject.UserId, UserName = userObject.UserName };
+                    c.User = new Models.User { UserId = userObject.Id, UserName = userObject.UserName };
                 }
             }
 

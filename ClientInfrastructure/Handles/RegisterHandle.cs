@@ -1,8 +1,7 @@
-﻿using Infrastructure;
-using Infrastructure.Enums;
-using Infrastructure.Models;
+﻿using Infrastructure.Models;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Register;
+using Infrastructure.Enums;
 using System;
 
 namespace ServerInfrastructure.Handles
@@ -13,7 +12,7 @@ namespace ServerInfrastructure.Handles
         {
             var registerPacket = (SMSG_Register)bp;
 
-            if(registerPacket.status == Enums.RegistrationStatus.Ok)
+            if(registerPacket.status == RegistrationStatus.Ok)
             {
                 Console.WriteLine("Successfully registrated");
             }

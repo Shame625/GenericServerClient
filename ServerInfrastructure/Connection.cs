@@ -1,4 +1,4 @@
-﻿using DatabaseCore.Models;
+﻿using Infrastructure.Models;
 using System.Net.Sockets;
 
 namespace ServerInfrastructure

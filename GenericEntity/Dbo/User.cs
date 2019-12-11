@@ -1,16 +1,11 @@
-﻿using System;
+﻿using GenericEntity.MainEntity;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
-namespace DatabaseCore.Models
+namespace GenericEntity.Dbo
 {
-    public class User
+    public class User : EntityBase
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long UserId { get; set; }
         [MaxLength(32)]
         public string UserName { get; set; }
 

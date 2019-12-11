@@ -13,7 +13,7 @@ namespace Infrastructure.Handles
         {
             var loginPacket = (SMSG_Login)bp;
 
-            if(loginPacket.status == Enums.Enums.LoginStatus.Ok)
+            if(loginPacket.status == Enums.LoginStatus.Ok)
             {
                 ClientStates.UserName = loginPacket.UserName;
                 Console.WriteLine("Welcome " + ClientStates.UserName);
