@@ -31,7 +31,22 @@ namespace Infrastructure.Helpers
 
                     foreach(dynamic v in values)
                     {
-                        tempList.Add(v.Value.ToString());
+                        try
+                        {
+                            tempList.Add(v.Value.ToString());
+                        }
+                        catch
+                        {
+                            //try overloaded string
+                            try
+                            {
+                                tempList.Add(v.ToString());
+                            }
+                            catch
+                            {
+                                tempList.Add("Error");
+                            }
+                        }
                     }
                     var stringValue = string.Join(", ", tempList);
 

@@ -6,15 +6,16 @@ namespace GenericEntity.Dbo
 {
     public class User : EntityBase
     {
+        public User()
+        {
+            Characters = new HashSet<Character>();
+            Messages = new List<Message>();
+        }
+
         [MaxLength(32)]
         public string UserName { get; set; }
 
         public ICollection<Message> Messages { get; set; }
-        public virtual ICollection<Character> Characters { get; set; }
-
-        public User()
-        {
-            Messages = new List<Message>();
-        }
+        public ICollection<Character> Characters { get; set; }
     }
 }

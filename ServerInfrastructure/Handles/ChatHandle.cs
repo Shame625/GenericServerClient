@@ -35,15 +35,17 @@ namespace ServerInfrastructure.Handles
             using (var context = new ApplicationContext())
             {
                 var lastMessages = context.Messages.OrderByDescending(o => o.InsertDate).Take(10).Select(o => new MessageHistory { Value = o.Text }).ToArray();
-                
-                if(lastMessages.Count() != 10)
+
+                if (lastMessages.Count() != 10)
                 {
                     response.Messages = Enumerable.Range(0, 10).Select(n => new MessageHistory { Value = "" }).ToArray();
-                    for(var i = 0; i < lastMessages.Count(); i++)
+                    for (var i = 0; i < lastMessages.Count(); i++)
                     {
                         response.Messages[i] = lastMessages[i];
                     }
                 }
+                else
+                    response.Messages = lastMessages;
             }
 
             return new Result { Packet = response, IsVoidResult = false };

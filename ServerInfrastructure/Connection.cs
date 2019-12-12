@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Models;
+using ServerInfrastructure.Models;
 using System.Net.Sockets;
 
 namespace ServerInfrastructure
@@ -6,7 +7,7 @@ namespace ServerInfrastructure
     public class Connection
     {
         public Socket Socket { get; set; }
-        public User User { get; set; }
+        public ServerUser User { get; set; }
         public Connection(Socket socket)
         {
             this.Socket = socket;

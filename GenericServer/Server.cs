@@ -70,7 +70,6 @@ namespace GenericServer
                     TotalPacketsRec++;
                     var data = receivedPacket.Execute(client).Result;
 
-
                     var packetType = receivedPacket.GetPacketType();
                     ServerHelper.PrintPacketData(ref client, receivedPacket.GetData(), false, packetType);
 
