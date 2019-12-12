@@ -9,6 +9,10 @@
     <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Migrations\20191212100512_PlayerDbo.cs" />
+    <Compile Remove="Migrations\20191212100512_PlayerDbo.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.6">
       <PrivateAssets>all</PrivateAssets>

@@ -10,6 +10,7 @@ namespace GenericEntity.Dbo
         public string UserName { get; set; }
 
         public ICollection<Message> Messages { get; set; }
+        public virtual ICollection<Character> Characters { get; set; }
 
         public User()
         {

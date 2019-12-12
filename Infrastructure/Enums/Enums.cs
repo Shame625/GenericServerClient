@@ -20,4 +20,11 @@ namespace Infrastructure.Enums
         Others,
         Local
     }
+
+    public enum Class : UInt16
+    {
+        Warrior,
+        Priest,
+        Rogue
+    }
 }
