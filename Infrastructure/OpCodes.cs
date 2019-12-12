@@ -1,5 +1,4 @@
-﻿using Infrastructure.Packets;
-using Infrastructure.Packets.Login;
+﻿using Infrastructure.Packets.Login;
 using Infrastructure.Packets.Message;
 using Infrastructure.Packets.Register;
 using System;

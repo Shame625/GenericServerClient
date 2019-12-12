@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Enums;
+using Infrastructure.Models;
 using System.Runtime.InteropServices;
 
 namespace Infrastructure.Packets.Login
@@ -15,21 +16,5 @@ namespace Infrastructure.Packets.Login
 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
         public Character[] Characters;
-
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        public struct Character
-        {
-            public long CharacterId;
-
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 12)]
-            public string Name;
-
-            public uint Level;
-            public Class Class;
-            public override string ToString()
-            {
-                return string.Format($"CharId: {CharacterId} Name: {Name} Level: {Level} Class: {Class.ToString()}");
-            }
-        }
     }
 }
