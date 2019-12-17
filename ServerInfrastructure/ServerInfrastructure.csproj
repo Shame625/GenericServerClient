@@ -8,6 +8,11 @@
     <UpgradeBackupLocation>C:\ProjektiVanjski\GenericServer\GenericServerClient\Backup\ServerInfrastructure\</UpgradeBackupLocation>
     <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath></OutputPath>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\DatabaseCore\DatabaseCore.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
