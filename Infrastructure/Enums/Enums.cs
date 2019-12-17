@@ -27,4 +27,10 @@ namespace Infrastructure.Enums
         Priest,
         Rogue
     }
+
+    public enum Objects : UInt16
+    {
+        Cube,
+        Sphere
+    }
 }

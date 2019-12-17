@@ -6,6 +6,7 @@ using Infrastructure.Packets;
 using Infrastructure.Packets.Login;
 using Infrastructure.Packets.Message;
 using Infrastructure.Packets.Register;
+using Infrastructure.Packets.Test;
 using ServerInfrastructure.Handles;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,9 @@ namespace ServerInfrastructure
 
             { OpCodes.CMSG_LastMessages, new OpCodeFunction(typeof(CMSG_LastMessages), ChatHandle.LastMessages) },
             { OpCodes.SMSG_LastMessages, new OpCodeFunction(typeof(SMSG_LastMessages), null) },
+
+            { OpCodes.CMSG_SpawnObject, new OpCodeFunction(typeof(CMSG_SpawnObject), TestHandle.SpawnObject, PacketType.Local) },
+            { OpCodes.SMSG_SpawnObject, new OpCodeFunction(typeof(SMSG_SpawnObject), null) },
         };
 
         public class OpCodeFunction

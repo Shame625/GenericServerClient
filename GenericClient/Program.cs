@@ -4,6 +4,7 @@ using Infrastructure.Packets;
 using Infrastructure.Packets.Login;
 using Infrastructure.Packets.Message;
 using Infrastructure.Packets.Register;
+using Infrastructure.Packets.Test;
 using System;
 using System.Linq;
 using System.Net;
@@ -56,6 +57,18 @@ namespace Client
                 if (b == "MSGHISTORY")
                 {
                     Send(new CMSG_LastMessages().Serialize());
+                }
+                else if (b.Contains("SPAWN CUBE"))
+                {
+                    var param = b.Split(" ");
+                    var packet = new CMSG_SpawnObject { objType = Infrastructure.Enums.Objects.Cube, x = Convert.ToInt32(param[2]), y = Convert.ToInt32(param[3]), z = Convert.ToInt32(param[4]) };
+                    Send(packet.Serialize());
+                }
+                else if(b.Contains("SPAWN SPHERE"))
+                {
+                    var param = b.Split(" ");
+                    var packet = new CMSG_SpawnObject { objType = Infrastructure.Enums.Objects.Sphere, x = Convert.ToInt32(param[2]), y = Convert.ToInt32(param[3]), z = Convert.ToInt32(param[4]) };
+                    Send(packet.Serialize());
                 }
                 else
                 {

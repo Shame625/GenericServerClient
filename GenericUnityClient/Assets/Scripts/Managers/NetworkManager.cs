@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Net;
 using System;
 using Infrastructure;
-using ClientInfrastructure;
+using UnityClientInfrastructure;
 using Infrastructure.Packets;
 
 public class NetworkManager : MonoBehaviour
@@ -15,6 +15,17 @@ public class NetworkManager : MonoBehaviour
     private void Awake()
     {
         Connect();
+    }
+
+    int i = 0;
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            var msg = new Infrastructure.Packets.Message.CMSG_Message { Message = "Test" + i.ToString()};
+            Send(msg.Serialize());
+            i++;
+        }
     }
 
     public void Connect()
@@ -71,30 +82,37 @@ public class NetworkManager : MonoBehaviour
         //Initialize packet
         BasePacket packet = null;
 
-        try
-        {
-            //dataBuff.PrintData(false);
-
-            packet = dataBuff.Deserialize();
-
-            Debug.Log(Helpers.Helper.GetObjectProps(packet));
-
-            var test = packet.Execute();
-            if (!test.IsVoidResult)
+            try
             {
-                //send bytes
-                Send(test.PacketBytes);
-            }
-            else
+                //dataBuff.PrintData(false);
+
+                packet = dataBuff.Deserialize();
+
+                Debug.Log(Helpers.Helper.GetObjectProps(packet));
+
+            Infrastructure.Models.Result result = null;
+            Dispatcher.RunOnMainThread(() =>
             {
-                clientSocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, ReceiveCallback, null);
+                result = packet.Execute();
+            });
+
+            Debug.Log("Exectued");
+                if (result != null && !result.IsVoidResult)
+                {
+                    //send bytes
+                    Send(result.PacketBytes);
+                }
+                else
+                {
+                    clientSocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, ReceiveCallback, null);
+                }
             }
-        }
-        catch (Exception ex)
-        {
-            Debug.Log(ex.Message);
-            return;
-        }
+            catch (Exception ex)
+            {
+                Debug.Log(ex.Message);
+                return;
+            }
+        
     }
 
     public static void Send(byte[] data)

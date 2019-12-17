@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Packets.Login;
 using Infrastructure.Packets.Message;
 using Infrastructure.Packets.Register;
+using Infrastructure.Packets.Test;
 using System;
 using System.Collections.Generic;
 
@@ -18,6 +19,9 @@ namespace Infrastructure
         SMSG_Message = 0x1001,
         CMSG_LastMessages = 0x1002,
         SMSG_LastMessages = 0x1003,
+
+        CMSG_SpawnObject = 0xFFEE,
+        SMSG_SpawnObject = 0xFFFF
     }
 
     public static class PacketStorage
@@ -34,7 +38,10 @@ namespace Infrastructure
             {OpCodes.SMSG_Message, typeof(SMSG_Message)},
 
             {OpCodes.CMSG_LastMessages, typeof(CMSG_LastMessages)},
-            {OpCodes.SMSG_LastMessages, typeof(SMSG_LastMessages)}
+            {OpCodes.SMSG_LastMessages, typeof(SMSG_LastMessages)},
+
+            {OpCodes.CMSG_SpawnObject, typeof(CMSG_SpawnObject)},
+            {OpCodes.SMSG_SpawnObject, typeof(SMSG_SpawnObject)}
         };
     }
 }

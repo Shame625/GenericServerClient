@@ -65,20 +65,8 @@
   <ItemGroup>
     <Compile Include="Assets\Config\Constants.cs" />
     <Compile Include="Assets\Helpers\Helpers.cs" />
+    <Compile Include="Assets\Scripts\Managers\Dispatcher.cs" />
     <Compile Include="Assets\Scripts\Managers\NetworkManager.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\ActionExtension.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\Channel.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\Dispatcher.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\EnumerableExtension.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\EnumeratorExtension.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\ObjectExtension.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\SwitchTo.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\Task.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\TaskDistributer.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\TaskExtension.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\Thread.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\UnityThreadHelper.cs" />
-    <Compile Include="Assets\Scripts\UnityThreadHelper\WaitOneExtension.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/ProjektiVanjski/GenericServer/GenericServerClient/GenericUnityClient/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -283,17 +271,14 @@
     <Reference Include="UnityEngine.XRModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.15f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
-    <Reference Include="ClientInfrastructure">
-      <HintPath>C:/ProjektiVanjski/GenericServer/GenericServerClient/GenericUnityClient/Assets/Externals/ClientInfrastructure.dll</HintPath>
-    </Reference>
     <Reference Include="Infrastructure">
-      <HintPath>C:/ProjektiVanjski/GenericServer/GenericServerClient/GenericUnityClient/Assets/Externals/Infrastructure.dll</HintPath>
+      <HintPath>C:/ProjektiVanjski/GenericServer/GenericServerClient/GenericUnityClient/Assets/Externals/netcoreapp3.0/Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityClientInfrastructure">
+      <HintPath>C:/ProjektiVanjski/GenericServer/GenericServerClient/GenericUnityClient/Assets/Externals/netcoreapp3.0/UnityClientInfrastructure.dll</HintPath>
     </Reference>
     <Reference Include="ClientInfrastructure">
       <HintPath>C:/ProjektiVanjski/GenericServer/GenericServerClient/GenericUnityClient/Assets/Externals/netcoreapp3.0/ClientInfrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="Infrastructure">
-      <HintPath>C:/ProjektiVanjski/GenericServer/GenericServerClient/GenericUnityClient/Assets/Externals/netcoreapp3.0/Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.15f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>

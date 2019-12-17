@@ -130,7 +130,11 @@ namespace GenericServer
             }
             catch (Exception e)
             {
+                Connections.connectedClients.Remove(client.Socket);
                 Console.WriteLine(e);
+                client.Socket.Close();
+                client.Socket.Dispose();
+                
                 //close connection in case of error
             }
         }
