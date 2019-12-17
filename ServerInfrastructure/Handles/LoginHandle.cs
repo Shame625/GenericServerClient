@@ -8,7 +8,6 @@ using ServerInfrastructure;
 using ServerInfrastructure.Models;
 using System.Linq;
 using System.Threading.Tasks;
-using static Infrastructure.Packets.Login.SMSG_Login;
 
 namespace Infrastructure.Handles
 {

@@ -38,7 +38,7 @@ namespace Infrastructure
             typeBytes[0] = data[0];
             typeBytes[1] = data[1];
 
-            return (OpCodes)BitConverter.ToUInt16(typeBytes);
+            return (OpCodes)BitConverter.ToUInt16(typeBytes, 0);
         }
     }
 }

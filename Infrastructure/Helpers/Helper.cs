@@ -29,11 +29,11 @@ namespace Infrastructure.Helpers
 
                     var tempList = new List<string>();
 
-                    foreach(dynamic v in values)
+                    foreach(object v in values)
                     {
                         try
                         {
-                            tempList.Add(v.Value.ToString());
+                            tempList.Add(v.ToString());
                         }
                         catch
                         {

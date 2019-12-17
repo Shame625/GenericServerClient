@@ -4,7 +4,7 @@ using Infrastructure.Packets.Register;
 using Infrastructure.Enums;
 using System;
 
-namespace ServerInfrastructure.Handles
+namespace ClientInfrastructure.Handles
 {
     public static class RegisterHandle
     {

@@ -6,9 +6,9 @@ using System;
 
 namespace ClientInfrastructure.Handles
 {
-    public static class ChatHandle
+    public class ChatHandle
     {
-        public static Result MessageReceived(BasePacket bp)
+        public virtual Result MessageReceived(BasePacket bp)
         {
             var messagePacket = (SMSG_Message)bp;
             Console.WriteLine(messagePacket.GetTimestamp().ToString("dd/MM/yyyy hh:mm:ss") + " [" + messagePacket.UserName + "]: " + messagePacket.Message);
@@ -16,7 +16,7 @@ namespace ClientInfrastructure.Handles
             return new Result { IsVoidResult = true };
         }
 
-        internal static Result LastMessages(BasePacket bp)
+        internal virtual Result LastMessages(BasePacket bp)
         {
             var messagePacket = (SMSG_LastMessages)bp;
 

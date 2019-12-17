@@ -6,7 +6,6 @@ using Infrastructure.Packets;
 using Infrastructure.Packets.Login;
 using Infrastructure.Packets.Message;
 using Infrastructure.Packets.Register;
-using ServerInfrastructure.Handles;
 using System;
 using System.Collections.Generic;
 
@@ -25,10 +24,10 @@ namespace ClientInfrastructure
             { OpCodes.SMSG_Register, new OpCodeFunction(typeof(SMSG_Register), RegisterHandle.RegisterChallange) },
 
             { OpCodes.CMSG_Message, new OpCodeFunction(typeof(CMSG_Message), null) },
-            { OpCodes.SMSG_Message, new OpCodeFunction(typeof(SMSG_Message), ChatHandle.MessageReceived) },
+            { OpCodes.SMSG_Message, new OpCodeFunction(typeof(SMSG_Message), new ChatHandle().MessageReceived) },
 
             { OpCodes.CMSG_LastMessages, new OpCodeFunction(typeof(CMSG_LastMessages), null) },
-            { OpCodes.SMSG_LastMessages, new OpCodeFunction(typeof(SMSG_LastMessages), ChatHandle.LastMessages) },
+            { OpCodes.SMSG_LastMessages, new OpCodeFunction(typeof(SMSG_LastMessages), new ChatHandle().LastMessages) },
         };
 
         public class OpCodeFunction
