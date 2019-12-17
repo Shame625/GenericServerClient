@@ -1,5 +1,6 @@
 ﻿using DatabaseCore;
 using Infrastructure.Enums;
+using Infrastructure.Models;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Login;
 using Microsoft.EntityFrameworkCore;
