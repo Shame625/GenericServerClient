@@ -18,10 +18,10 @@ namespace ClientInfrastructure
 
         public static Dictionary<OpCodes, OpCodeFunction> packets = new Dictionary<OpCodes, OpCodeFunction>()
         {
-            { OpCodes.CMSG_Login, new OpCodeFunction(typeof(SMSG_Login), null) },
+            { OpCodes.CMSG_Login, new OpCodeFunction(typeof(CMSG_Login), null) },
             { OpCodes.SMSG_Login, new OpCodeFunction(typeof(SMSG_Login), LoginHandle.LoginChallenge) },
 
-            { OpCodes.CMSG_Register, new OpCodeFunction(typeof(SMSG_Register), null) },
+            { OpCodes.CMSG_Register, new OpCodeFunction(typeof(CMSG_Register), null) },
             { OpCodes.SMSG_Register, new OpCodeFunction(typeof(SMSG_Register), RegisterHandle.RegisterChallange) },
 
             { OpCodes.CMSG_Message, new OpCodeFunction(typeof(CMSG_Message), null) },

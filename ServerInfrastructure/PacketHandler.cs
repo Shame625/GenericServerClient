@@ -7,6 +7,7 @@ using Infrastructure.Packets.Login;
 using Infrastructure.Packets.Message;
 using Infrastructure.Packets.Register;
 using Infrastructure.Packets.Test;
+using ServerInfrastructure.Enums;
 using ServerInfrastructure.Handles;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,8 @@ namespace ServerInfrastructure
 
         public static Dictionary<OpCodes, OpCodeFunction> packets = new Dictionary<OpCodes, OpCodeFunction>()
         {
-            { OpCodes.CMSG_Login, new OpCodeFunction(typeof(SMSG_Login), LoginHandle.LoginChallenge) },
-            { OpCodes.SMSG_Login, new OpCodeFunction(typeof(SMSG_Login), null) },
+            { OpCodes.CMSG_Login, new OpCodeFunction(typeof(SMSG_Login), LoginHandle.LoginChallenge, PacketType.Nothing, PacketFilter.Anonymous, PacketProtectionLevel.Guest) },
+            { OpCodes.SMSG_Login, new OpCodeFunction(typeof(SMSG_Login), null, PacketType.ReturnToSender, PacketFilter.Anonymous, PacketProtectionLevel.Guest) },
 
             { OpCodes.CMSG_Register, new OpCodeFunction(typeof(SMSG_Register), RegisterHandle.RegisterChallange) },
             { OpCodes.SMSG_Register, new OpCodeFunction(typeof(SMSG_Register), null) },
@@ -41,12 +42,17 @@ namespace ServerInfrastructure
             public Type type;
             public GenericDelegate operation;
             public PacketType packetType;
+            public PacketFilter filter;
+            public PacketProtectionLevel protectionLevel;
 
-            public OpCodeFunction(Type type, GenericDelegate operation, PacketType packetType = PacketType.ReturnToSender)
+
+            public OpCodeFunction(Type type, GenericDelegate operation, PacketType packetType = PacketType.ReturnToSender, PacketFilter filter = PacketFilter.LoggedIn, PacketProtectionLevel protectionLevel = PacketProtectionLevel.Admin)
             {
                 this.type = type;
                 this.operation = operation;
                 this.packetType = packetType;
+                this.filter = filter;
+                this.protectionLevel = protectionLevel;
             }
         }
     }

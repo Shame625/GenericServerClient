@@ -34,7 +34,7 @@ namespace ServerInfrastructure.Handles
 
             using (var context = new ApplicationContext())
             {
-                var lastMessages = context.Messages.OrderByDescending(o => o.InsertDate).Take(10).Select(o => new MessageHistory { Value = o.Text }).ToArray();
+                var lastMessages = context.Messages.OrderByDescending(o => o.InsertDate).Take(10).Where(o => o.User.Id == c.User.UserId).Select(o => new MessageHistory { Value = o.Text }).ToArray();
 
                 if (lastMessages.Count() != 10)
                 {
