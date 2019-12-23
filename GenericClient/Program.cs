@@ -132,12 +132,13 @@ namespace Client
 
             try
             {
-                //dataBuff.PrintData(false);
+                dataBuff.PrintData(true);
 
                 packet = dataBuff.Deserialize();
 
                 var test = packet.Execute();
-                if (!test.IsVoidResult)
+
+                if (test != null && !test.IsVoidResult)
                 {
                     //send bytes
                     Send(test.PacketBytes);

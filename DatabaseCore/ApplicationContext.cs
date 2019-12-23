@@ -1,4 +1,5 @@
 ﻿using GenericEntity.Dbo;
+using GenericEntity.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -19,6 +20,13 @@ namespace DatabaseCore
                 .Build();
 
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .Property(b => b.Role)
+                .HasDefaultValue(Roles.User);
         }
     }
 }

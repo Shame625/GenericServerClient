@@ -3,6 +3,7 @@ using Infrastructure.Enums;
 using Infrastructure.Handles;
 using Infrastructure.Models;
 using Infrastructure.Packets;
+using Infrastructure.Packets.Error;
 using Infrastructure.Packets.Login;
 using Infrastructure.Packets.Message;
 using Infrastructure.Packets.Register;
@@ -21,20 +22,22 @@ namespace ServerInfrastructure
 
         public static Dictionary<OpCodes, OpCodeFunction> packets = new Dictionary<OpCodes, OpCodeFunction>()
         {
-            { OpCodes.CMSG_Login, new OpCodeFunction(typeof(SMSG_Login), LoginHandle.LoginChallenge, PacketType.Nothing, PacketFilter.Anonymous, PacketProtectionLevel.Guest) },
+            { OpCodes.CMSG_Login, new OpCodeFunction(typeof(SMSG_Login), LoginHandle.LoginChallenge, PacketType.ReturnToSender, PacketFilter.Anonymous, PacketProtectionLevel.Guest) },
             { OpCodes.SMSG_Login, new OpCodeFunction(typeof(SMSG_Login), null, PacketType.ReturnToSender, PacketFilter.Anonymous, PacketProtectionLevel.Guest) },
 
-            { OpCodes.CMSG_Register, new OpCodeFunction(typeof(SMSG_Register), RegisterHandle.RegisterChallange) },
+            { OpCodes.CMSG_Register, new OpCodeFunction(typeof(SMSG_Register), RegisterHandle.RegisterChallange, PacketType.ReturnToSender, PacketFilter.Anonymous, PacketProtectionLevel.Guest) },
             { OpCodes.SMSG_Register, new OpCodeFunction(typeof(SMSG_Register), null) },
 
-            { OpCodes.CMSG_Message, new OpCodeFunction(typeof(CMSG_Message), ChatHandle.MessageSent, PacketType.Others) },
+            { OpCodes.CMSG_Message, new OpCodeFunction(typeof(CMSG_Message), ChatHandle.MessageSent, PacketType.Others, PacketFilter.LoggedIn, PacketProtectionLevel.User) },
             { OpCodes.SMSG_Message, new OpCodeFunction(typeof(SMSG_Message), null, PacketType.Others) },
 
-            { OpCodes.CMSG_LastMessages, new OpCodeFunction(typeof(CMSG_LastMessages), ChatHandle.LastMessages) },
+            { OpCodes.CMSG_LastMessages, new OpCodeFunction(typeof(CMSG_LastMessages), ChatHandle.LastMessages, PacketType.ReturnToSender, PacketFilter.LoggedIn, PacketProtectionLevel.User) },
             { OpCodes.SMSG_LastMessages, new OpCodeFunction(typeof(SMSG_LastMessages), null) },
 
-            { OpCodes.CMSG_SpawnObject, new OpCodeFunction(typeof(CMSG_SpawnObject), TestHandle.SpawnObject, PacketType.Local) },
+            { OpCodes.CMSG_SpawnObject, new OpCodeFunction(typeof(CMSG_SpawnObject), TestHandle.SpawnObject, PacketType.Local, PacketFilter.LoggedIn, PacketProtectionLevel.Admin) },
             { OpCodes.SMSG_SpawnObject, new OpCodeFunction(typeof(SMSG_SpawnObject), null) },
+
+            { OpCodes.SMSG_Error, new OpCodeFunction(typeof(SMSG_Error), null) },
         };
 
         public class OpCodeFunction
@@ -44,7 +47,6 @@ namespace ServerInfrastructure
             public PacketType packetType;
             public PacketFilter filter;
             public PacketProtectionLevel protectionLevel;
-
 
             public OpCodeFunction(Type type, GenericDelegate operation, PacketType packetType = PacketType.ReturnToSender, PacketFilter filter = PacketFilter.LoggedIn, PacketProtectionLevel protectionLevel = PacketProtectionLevel.Admin)
             {
@@ -62,11 +64,29 @@ namespace ServerInfrastructure
         {
             try
             {
-                return PacketHandler.packets[bp.Id].operation(bp, c);
+                if ((uint)PacketHandler.packets[bp.Id].filter == (uint)c.GetPacketFilter())
+                {
+                    if ((uint)PacketHandler.packets[bp.Id].protectionLevel <= (uint)c.GetPacketProtectionLevel())
+                    {
+                        return PacketHandler.packets[bp.Id].operation(bp, c);
+                    }
+                    else
+                    {
+                        var errorPacket = new Result { IsVoidResult = false, Packet = new SMSG_Error { errorType = ErrorType.ProtectionLevelError } };
+                        return Task.FromResult(errorPacket);
+                    }
+                }
+                else
+                {
+                    var errorPacket = new Result { IsVoidResult = false, Packet = new SMSG_Error { errorType = ErrorType.FilterError } };
+                    return Task.FromResult(errorPacket);
+                }
+
             }
             catch
             {
-                return null;
+                var errorPacket = new Result { IsVoidResult = false, Packet = new SMSG_Error { errorType = ErrorType.ParsingError } };
+                return Task.FromResult(errorPacket);
             }
         }
     }

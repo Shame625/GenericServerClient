@@ -71,6 +71,11 @@ namespace GenericServer
                     var data = receivedPacket.Execute(client).Result;
 
                     var packetType = receivedPacket.GetPacketType();
+
+                    //check if it resulted in error
+                    if (data.Packet.Id == OpCodes.SMSG_Error)
+                        packetType = data.Packet.GetPacketType();
+
                     ServerHelper.PrintPacketData(ref client, receivedPacket.GetData(), false, packetType);
 
                     //Send data

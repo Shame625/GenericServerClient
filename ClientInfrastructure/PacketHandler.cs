@@ -3,6 +3,7 @@ using Infrastructure;
 using Infrastructure.Handles;
 using Infrastructure.Models;
 using Infrastructure.Packets;
+using Infrastructure.Packets.Error;
 using Infrastructure.Packets.Login;
 using Infrastructure.Packets.Message;
 using Infrastructure.Packets.Register;
@@ -31,7 +32,9 @@ namespace ClientInfrastructure
             { OpCodes.SMSG_LastMessages, new OpCodeFunction(typeof(SMSG_LastMessages), new ChatHandle().LastMessages) },
 
             { OpCodes.CMSG_SpawnObject, new OpCodeFunction(typeof(CMSG_SpawnObject), null) },
-            { OpCodes.SMSG_SpawnObject, new OpCodeFunction(typeof(SMSG_SpawnObject), TestHandle.SpawnObject) }
+            { OpCodes.SMSG_SpawnObject, new OpCodeFunction(typeof(SMSG_SpawnObject), TestHandle.SpawnObject) },
+
+            { OpCodes.SMSG_Error, new OpCodeFunction(typeof(SMSG_Error), null) },
         };
 
         public class OpCodeFunction

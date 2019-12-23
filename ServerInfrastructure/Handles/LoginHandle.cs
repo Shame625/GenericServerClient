@@ -5,6 +5,7 @@ using Infrastructure.Packets;
 using Infrastructure.Packets.Login;
 using Microsoft.EntityFrameworkCore;
 using ServerInfrastructure;
+using ServerInfrastructure.Enums;
 using ServerInfrastructure.Models;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,6 +30,10 @@ namespace Infrastructure.Handles
                     response.status = LoginStatus.Ok;
                     c.User = new ServerUser { UserId = userObject.Id, UserName = userObject.UserName, UserData = userObject };
 
+                    var protectionLevel = userObject.Role == GenericEntity.Enums.Roles.Admin ? PacketProtectionLevel.Admin : PacketProtectionLevel.User;
+
+                    c.User.SetFilterAndPortectionlevel(PacketFilter.LoggedIn, protectionLevel);
+
                     if (userObject.Characters.Count() != 10)
                     {
                         response.Characters = Enumerable.Range(0, 10).Select(n => new Character { CharacterId = 0, Class = Class.Priest, Level = 0, Name = ""}).ToArray();
@@ -44,7 +49,7 @@ namespace Infrastructure.Handles
                 }
             }
 
-            return new Models.Result { Packet = response, IsVoidResult = false };
+            return new Result { Packet = response, IsVoidResult = false };
         }
     }
 }

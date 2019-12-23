@@ -33,4 +33,11 @@ namespace Infrastructure.Enums
         Cube,
         Sphere
     }
+
+    public enum ErrorType : UInt16
+    {
+       FilterError,
+       ProtectionLevelError,
+       ParsingError
+    }
 }

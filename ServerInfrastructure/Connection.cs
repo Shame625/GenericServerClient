@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Models;
+using ServerInfrastructure.Enums;
 using ServerInfrastructure.Models;
 using System.Net.Sockets;
 
@@ -11,6 +12,24 @@ namespace ServerInfrastructure
         public Connection(Socket socket)
         {
             this.Socket = socket;
+        }
+
+        public PacketFilter GetPacketFilter()
+        {
+            if (User != null)
+            {
+                return User.packetFilter;
+            }
+            return PacketFilter.Anonymous;
+        }
+
+        public PacketProtectionLevel GetPacketProtectionLevel()
+        {
+            if(User != null)
+            {
+                return User.packetProtectionLevel;
+            }
+            return PacketProtectionLevel.Guest;
         }
 
         public string ConnectionHandle
