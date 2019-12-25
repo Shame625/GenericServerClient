@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Config\Constants.cs" />
     <Compile Include="Assets\Helpers\Helpers.cs" />
+    <Compile Include="Assets\Scripts\Managers\ChatManager.cs" />
     <Compile Include="Assets\Scripts\Managers\Dispatcher.cs" />
     <Compile Include="Assets\Scripts\Managers\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\UnityClientInfrastructure\ClientStates.cs" />

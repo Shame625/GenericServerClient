@@ -31,7 +31,8 @@ namespace Infrastructure.Enums
     public enum Objects : UInt16
     {
         Cube,
-        Sphere
+        Sphere,
+        Cylinder
     }
 
     public enum ErrorType : UInt16
@@ -39,5 +40,12 @@ namespace Infrastructure.Enums
        FilterError,
        ProtectionLevelError,
        ParsingError
+    }
+
+    public enum MessageType : UInt16
+    {
+        ServerMessage,
+        UserMessage,
+        LocalMessage
     }
 }

@@ -1,5 +1,6 @@
 ﻿using DatabaseCore;
 using GenericEntity.Dbo;
+using Infrastructure.Enums;
 using Infrastructure.Models;
 using Infrastructure.Packets;
 using Infrastructure.Packets.Message;
@@ -14,7 +15,7 @@ namespace ServerInfrastructure.Handles
         {
             var messagePacket = (CMSG_Message)bp;
 
-            var response = new SMSG_Message() { UserName = c.User.UserName, Message = messagePacket.Message };
+            var response = new SMSG_Message() { UserName = c.User.UserName, Message = messagePacket.Message, MessageType = MessageType.UserMessage };
 
             using (var context = new ApplicationContext())
             {

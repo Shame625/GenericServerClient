@@ -28,6 +28,10 @@ namespace UnityClientInfrastructure.Handles
                         GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                         sphere.transform.position = new Vector3(spawnObjectPacket.x, spawnObjectPacket.y, spawnObjectPacket.z);
                         break;
+                    case Objects.Cylinder:
+                        GameObject cylinder = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                        cylinder.transform.position = new Vector3(spawnObjectPacket.x, spawnObjectPacket.y, spawnObjectPacket.z);
+                        break;
                     default:
                         Debug.Log("Failed to spawn object");
                         break;

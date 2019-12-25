@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using Infrastructure.Enums;
+using System.Runtime.InteropServices;
 
 namespace Infrastructure.Packets.Message
 {
@@ -6,6 +7,7 @@ namespace Infrastructure.Packets.Message
     public class SMSG_Message : BasePacket
     {
         public SMSG_Message() : base(OpCodes.SMSG_Message) { }
+        public MessageType MessageType;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string UserName;

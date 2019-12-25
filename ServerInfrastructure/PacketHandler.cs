@@ -22,22 +22,22 @@ namespace ServerInfrastructure
 
         public static Dictionary<OpCodes, OpCodeFunction> packets = new Dictionary<OpCodes, OpCodeFunction>()
         {
-            { OpCodes.CMSG_Login, new OpCodeFunction(typeof(SMSG_Login), LoginHandle.LoginChallenge, PacketType.ReturnToSender, PacketFilter.Anonymous, PacketProtectionLevel.Guest) },
+            { OpCodes.CMSG_Login, new OpCodeFunction(typeof(SMSG_Login), LoginHandle.LoginChallenge, PacketType.Nothing, PacketFilter.Anonymous, PacketProtectionLevel.Guest) },
             { OpCodes.SMSG_Login, new OpCodeFunction(typeof(SMSG_Login), null, PacketType.ReturnToSender, PacketFilter.Anonymous, PacketProtectionLevel.Guest) },
 
-            { OpCodes.CMSG_Register, new OpCodeFunction(typeof(SMSG_Register), RegisterHandle.RegisterChallange, PacketType.ReturnToSender, PacketFilter.Anonymous, PacketProtectionLevel.Guest) },
-            { OpCodes.SMSG_Register, new OpCodeFunction(typeof(SMSG_Register), null) },
+            { OpCodes.CMSG_Register, new OpCodeFunction(typeof(SMSG_Register), RegisterHandle.RegisterChallange, PacketType.Nothing, PacketFilter.Anonymous, PacketProtectionLevel.Guest) },
+            { OpCodes.SMSG_Register, new OpCodeFunction(typeof(SMSG_Register), null, PacketType.ReturnToSender) },
 
-            { OpCodes.CMSG_Message, new OpCodeFunction(typeof(CMSG_Message), ChatHandle.MessageSent, PacketType.Others, PacketFilter.LoggedIn, PacketProtectionLevel.User) },
-            { OpCodes.SMSG_Message, new OpCodeFunction(typeof(SMSG_Message), null, PacketType.Others) },
+            { OpCodes.CMSG_Message, new OpCodeFunction(typeof(CMSG_Message), ChatHandle.MessageSent, PacketType.Nothing, PacketFilter.LoggedIn, PacketProtectionLevel.User) },
+            { OpCodes.SMSG_Message, new OpCodeFunction(typeof(SMSG_Message), null, PacketType.Local) },
 
-            { OpCodes.CMSG_LastMessages, new OpCodeFunction(typeof(CMSG_LastMessages), ChatHandle.LastMessages, PacketType.ReturnToSender, PacketFilter.LoggedIn, PacketProtectionLevel.User) },
-            { OpCodes.SMSG_LastMessages, new OpCodeFunction(typeof(SMSG_LastMessages), null) },
+            { OpCodes.CMSG_LastMessages, new OpCodeFunction(typeof(CMSG_LastMessages), ChatHandle.LastMessages, PacketType.Nothing, PacketFilter.LoggedIn, PacketProtectionLevel.User) },
+            { OpCodes.SMSG_LastMessages, new OpCodeFunction(typeof(SMSG_LastMessages), null, PacketType.ReturnToSender) },
 
-            { OpCodes.CMSG_SpawnObject, new OpCodeFunction(typeof(CMSG_SpawnObject), TestHandle.SpawnObject, PacketType.Local, PacketFilter.LoggedIn, PacketProtectionLevel.Admin) },
-            { OpCodes.SMSG_SpawnObject, new OpCodeFunction(typeof(SMSG_SpawnObject), null) },
+            { OpCodes.CMSG_SpawnObject, new OpCodeFunction(typeof(CMSG_SpawnObject), TestHandle.SpawnObject, PacketType.Nothing, PacketFilter.LoggedIn, PacketProtectionLevel.Admin) },
+            { OpCodes.SMSG_SpawnObject, new OpCodeFunction(typeof(SMSG_SpawnObject), null, PacketType.Local) },
 
-            { OpCodes.SMSG_Error, new OpCodeFunction(typeof(SMSG_Error), null) },
+            { OpCodes.SMSG_Error, new OpCodeFunction(typeof(SMSG_Error), null, PacketType.ReturnToSender) },
         };
 
         public class OpCodeFunction
@@ -48,7 +48,7 @@ namespace ServerInfrastructure
             public PacketFilter filter;
             public PacketProtectionLevel protectionLevel;
 
-            public OpCodeFunction(Type type, GenericDelegate operation, PacketType packetType = PacketType.ReturnToSender, PacketFilter filter = PacketFilter.LoggedIn, PacketProtectionLevel protectionLevel = PacketProtectionLevel.Admin)
+            public OpCodeFunction(Type type, GenericDelegate operation, PacketType packetType = PacketType.Nothing, PacketFilter filter = PacketFilter.LoggedIn, PacketProtectionLevel protectionLevel = PacketProtectionLevel.Admin)
             {
                 this.type = type;
                 this.operation = operation;

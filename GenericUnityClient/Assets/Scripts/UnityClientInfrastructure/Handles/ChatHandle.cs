@@ -6,17 +6,29 @@ using UnityEngine;
 
 namespace UnityClientInfrastructure.Handles
 {
+     
     public class ChatHandle
     {
+        private static ChatManager _chatManager;
+        private static ChatManager ChatManager
+        {
+            get
+            {
+                if(_chatManager == null)
+                    _chatManager = GameObject.Find("ChatManager").GetComponent<ChatManager>();
+                return _chatManager;
+            }
+        }
+
         public static Result MessageReceived(BasePacket bp)
         {
             var messagePacket = (SMSG_Message)bp;
-            Debug.Log(messagePacket.GetTimestamp().ToString("dd/MM/yyyy hh:mm:ss") + " [" + messagePacket.UserName + "]: " + messagePacket.Message);
+            ChatManager.MessageReceived(messagePacket);
 
             return new Result { IsVoidResult = true };
         }
 
-        static internal  Result LastMessages(BasePacket bp)
+        public static Result LastMessages(BasePacket bp)
         {
             var messagePacket = (SMSG_LastMessages)bp;
 

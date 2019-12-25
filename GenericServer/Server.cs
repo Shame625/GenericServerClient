@@ -30,6 +30,8 @@ namespace GenericServer
             serverSocket.BeginAccept(new AsyncCallback(AcceptCallback), null);
 
             Console.WriteLine("Server started successfully!");
+
+            Helpers.ClientProcessStarter.StartProcesses(1);
         }
         private static void AcceptCallback(IAsyncResult AR)
         {
@@ -70,16 +72,12 @@ namespace GenericServer
                     TotalPacketsRec++;
                     var data = receivedPacket.Execute(client).Result;
 
-                    var packetType = receivedPacket.GetPacketType();
-
-                    //check if it resulted in error
-                    if (data.Packet.Id == OpCodes.SMSG_Error)
-                        packetType = data.Packet.GetPacketType();
+                    var packetType = data.Packet.GetPacketType();
 
                     ServerHelper.PrintPacketData(ref client, receivedPacket.GetData(), false, packetType);
 
                     //Send data
-                    if (!data.IsVoidResult)
+                    if (packetType != PacketType.Nothing)
                     {
                         switch (packetType)
                         {
@@ -136,11 +134,9 @@ namespace GenericServer
             catch (Exception e)
             {
                 Connections.connectedClients.Remove(client.Socket);
-                Console.WriteLine(e);
+                //Console.WriteLine(e);
                 client.Socket.Close();
                 client.Socket.Dispose();
-                
-                //close connection in case of error
             }
         }
         private static void SendCallback(IAsyncResult AR)

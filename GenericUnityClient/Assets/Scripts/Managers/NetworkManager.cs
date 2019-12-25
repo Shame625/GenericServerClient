@@ -17,17 +17,6 @@ public class NetworkManager : MonoBehaviour
         Connect();
     }
 
-    int i = 0;
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            var msg = new Infrastructure.Packets.Message.CMSG_Message { Message = "Test" + i.ToString()};
-            Send(msg.Serialize());
-            i++;
-        }
-    }
-
     public void Connect()
     {
         clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -64,7 +53,7 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    static void ReceiveCallback(IAsyncResult AR)
+    void ReceiveCallback(IAsyncResult AR)
     {
         Debug.Log("Receive data");
         //number of recieved bytes
@@ -115,14 +104,14 @@ public class NetworkManager : MonoBehaviour
         
     }
 
-    public static void Send(byte[] data)
+    public void Send(byte[] data)
     {
         //data.PrintData(true);
         if (data != null && data.Length != 0)
              clientSocket.BeginSend(data, 0, data.Length, 0, new AsyncCallback(SendCallback), clientSocket);
     }
 
-    private static void SendCallback(IAsyncResult ar)
+    private void SendCallback(IAsyncResult ar)
     {
         try
         {

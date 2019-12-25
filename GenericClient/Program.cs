@@ -64,10 +64,16 @@ namespace Client
                     var packet = new CMSG_SpawnObject { objType = Infrastructure.Enums.Objects.Cube, x = Convert.ToInt32(param[2]), y = Convert.ToInt32(param[3]), z = Convert.ToInt32(param[4]) };
                     Send(packet.Serialize());
                 }
-                else if(b.Contains("SPAWN SPHERE"))
+                else if (b.Contains("SPAWN SPHERE"))
                 {
                     var param = b.Split(" ");
                     var packet = new CMSG_SpawnObject { objType = Infrastructure.Enums.Objects.Sphere, x = Convert.ToInt32(param[2]), y = Convert.ToInt32(param[3]), z = Convert.ToInt32(param[4]) };
+                    Send(packet.Serialize());
+                }
+                else if (b.Contains("SPAWN CYLINDER"))
+                {
+                    var param = b.Split(" ");
+                    var packet = new CMSG_SpawnObject { objType = Infrastructure.Enums.Objects.Cylinder, x = Convert.ToInt32(param[2]), y = Convert.ToInt32(param[3]), z = Convert.ToInt32(param[4]) };
                     Send(packet.Serialize());
                 }
                 else
